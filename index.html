@@ -1,0 +1,1932 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Nhật Ký Số Của Nam: Vòng Xoáy Lựa Chọn</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background-color: #090d16;
+      color: #f8fafc;
+      overflow-x: hidden;
+    }
+
+    /* Background Gradient & Ambient Glow */
+    .cyber-bg {
+      background: radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.14) 0%, transparent 45%),
+                  radial-gradient(circle at 85% 80%, rgba(168, 85, 247, 0.14) 0%, transparent 45%),
+                  radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 1) 0%, #060911 100%);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); border-radius: 8px; }
+    ::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.4); border-radius: 8px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(56, 189, 248, 0.7); }
+
+    /* Animations */
+    @keyframes msgSlideIn {
+      0% { opacity: 0; transform: translateY(14px) scale(0.97); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .msg-appear {
+      animation: msgSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes pulseDanger {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.5); }
+      50% { box-shadow: 0 0 25px 6px rgba(244, 63, 94, 0.25); }
+    }
+    .crisis-glow {
+      animation: pulseDanger 2s infinite ease-in-out;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      25% { transform: scale(1.06); }
+      50% { transform: scale(1); }
+      75% { transform: scale(1.04); }
+    }
+    .heart-beat {
+      animation: heartbeat 1.8s infinite;
+    }
+
+    @keyframes typingDot {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+    .dot-1 { animation: typingDot 1.2s infinite 0s; }
+    .dot-2 { animation: typingDot 1.2s infinite 0.2s; }
+    .dot-3 { animation: typingDot 1.2s infinite 0.4s; }
+  </style>
+</head>
+<body class="cyber-bg min-h-screen flex flex-col justify-between select-none">
+
+  <!-- MÀN HÌNH CHÀO MỪNG & NHẬP VAI (START OVERLAY) -->
+  <div id="intro-screen" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex items-center justify-center p-4 overflow-y-auto">
+    <div class="max-w-2xl w-full bg-slate-900/90 border-2 border-cyan-500/50 rounded-3xl p-6 sm:p-8 shadow-2xl relative my-auto">
+      <!-- Badge chủ đề -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950 border border-cyan-500/40 text-cyan-300 text-xs font-bold mb-4">
+        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+        <span>TRÒ CHƠI TÌNH HUỐNG NHẬP VAI TƯƠNG TÁC</span>
+      </div>
+
+      <h1 class="text-2xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-200 to-indigo-300 leading-tight mb-3">
+        Nhật Ký Số Của Nam:<br>Vòng Xoáy Lựa Chọn
+      </h1>
+
+      <p class="text-sm sm:text-base text-slate-300 leading-relaxed mb-5">
+        Em sẽ hóa thân thành <b>Nam</b> — đối mặt với các cạm bẫy tâm lý đời thực trên Internet. 
+        <span class="text-amber-300 font-semibold">Không còn bất kỳ gợi ý đúng/sai nào. Mọi quyết định đều do em tự chịu trách nhiệm.</span>
+      </p>
+
+      <!-- 4 Quy tắc cốt lõi (Theo sách giáo khoa) -->
+      <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-4 mb-6">
+        <div class="text-xs font-extrabold text-sky-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+          <span>🛡️</span> 4 Thử thách An toàn & Ứng xử trên Internet đang chờ bạn:
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm">
+          <div class="bg-slate-900/90 border border-emerald-500/30 p-3 rounded-xl flex items-start gap-2.5">
+            <span class="px-2 py-0.5 bg-emerald-500/20 text-emerald-300 font-black rounded-lg">1</span>
+            <div><b class="text-emerald-300">Không chia sẻ</b> mật khẩu và thông tin cá nhân như địa chỉ, số điện thoại, mã OTP.</div>
+          </div>
+          <div class="bg-slate-900/90 border border-lime-500/30 p-3 rounded-xl flex items-start gap-2.5">
+            <span class="px-2 py-0.5 bg-lime-500/20 text-lime-300 font-black rounded-lg">2</span>
+            <div><b class="text-lime-300">Kiểm tra nguồn</b> thông tin trước khi tin tưởng hoặc bấm nút chia sẻ.</div>
+          </div>
+          <div class="bg-slate-900/90 border border-blue-500/30 p-3 rounded-xl flex items-start gap-2.5">
+            <span class="px-2 py-0.5 bg-blue-500/20 text-blue-300 font-black rounded-lg">3</span>
+            <div><b class="text-blue-300">Tôn trọng bản quyền</b>, không sao chép tài liệu, tác phẩm khi chưa được phép.</div>
+          </div>
+          <div class="bg-slate-900/90 border border-amber-500/30 p-3 rounded-xl flex items-start gap-2.5">
+            <span class="px-2 py-0.5 bg-amber-500/20 text-amber-300 font-black rounded-lg">4</span>
+            <div><b class="text-amber-300">Ứng xử lịch sự</b>, không xúc phạm hay hùa theo bắt nạt người khác trên mạng.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lưu ý đặc biệt -->
+      <div class="bg-amber-950/40 border border-amber-500/40 rounded-2xl p-3.5 text-xs sm:text-sm text-amber-200 mb-6 flex items-center gap-3">
+        <span class="text-2xl shrink-0">⚡</span>
+        <span><b>Quy luật Choice Master:</b> Bạn bè sẽ không ngừng dồn ép, khích tướng để thử thách lòng kiên định của em. Một phút yếu lòng sẽ kéo theo hàng loạt hậu quả khôn lường!</span>
+      </div>
+
+      <div class="flex justify-center">
+        <button onclick="startGame()" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-black text-base shadow-2xl border border-cyan-300/60 active:scale-95 transition flex items-center justify-center gap-3 cursor-pointer">
+          <span>📱</span> BẮT ĐẦU MỞ ĐIỆN THOẠI CỦA NAM
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER: THANH CHỈ SỐ BẢN LĨNH SỐ & CHƯƠNG TRUYỆN -->
+  <header class="w-full max-w-6xl mx-auto px-3 pt-3 pb-2 z-20">
+    <div class="bg-slate-900/90 border border-slate-800 backdrop-blur-md rounded-2xl p-3 shadow-xl flex flex-col lg:flex-row items-center justify-between gap-3">
+      
+      <!-- Thông tin chương hiện tại -->
+      <div class="flex items-center gap-3 w-full lg:w-auto justify-between lg:justify-start">
+        <div class="flex items-center gap-2.5">
+          <div id="chapter-badge" class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center font-black text-lg shadow-inner">
+            1
+          </div>
+          <div>
+            <div id="chapter-subtitle" class="text-[11px] font-extrabold text-cyan-400 uppercase tracking-wider">
+              TÌNH HUỐNG 1 / 4 • QUY TẮC BẢO MẬT
+            </div>
+            <h2 id="chapter-title" class="text-sm sm:text-base font-black text-white">
+              Chiếc Bẫy "Anh Em Chí Cốt" & Mã OTP Định Mệnh
+            </h2>
+          </div>
+        </div>
+
+        <!-- Nút bật/tắt âm thanh -->
+        <button onclick="toggleMute()" id="btn-sound" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-bold transition cursor-pointer shrink-0">
+          🔊 Âm thanh: Bật
+        </button>
+      </div>
+
+      <!-- 4 Thanh chỉ số sinh tồn số (4 Quy tắc) -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full lg:w-auto">
+        <!-- Chỉ số 1: Bảo mật -->
+        <div class="bg-slate-950/90 border border-slate-800 px-3 py-1.5 rounded-xl flex flex-col justify-center min-w-[125px]">
+          <div class="flex justify-between items-center text-[11px] font-bold mb-1">
+            <span class="text-emerald-400">🛡️ 1. Bảo mật</span>
+            <span id="stat-val-1" class="text-white font-extrabold">100%</span>
+          </div>
+          <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+            <div id="stat-bar-1" class="h-full bg-emerald-500 transition-all duration-500 w-full"></div>
+          </div>
+        </div>
+
+        <!-- Chỉ số 2: Kiểm chứng nguồn tin -->
+        <div class="bg-slate-950/90 border border-slate-800 px-3 py-1.5 rounded-xl flex flex-col justify-center min-w-[125px]">
+          <div class="flex justify-between items-center text-[11px] font-bold mb-1">
+            <span class="text-lime-400">🔍 2. Kiểm tin</span>
+            <span id="stat-val-2" class="text-white font-extrabold">100%</span>
+          </div>
+          <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+            <div id="stat-bar-2" class="h-full bg-lime-500 transition-all duration-500 w-full"></div>
+          </div>
+        </div>
+
+        <!-- Chỉ số 3: Bản quyền -->
+        <div class="bg-slate-950/90 border border-slate-800 px-3 py-1.5 rounded-xl flex flex-col justify-center min-w-[125px]">
+          <div class="flex justify-between items-center text-[11px] font-bold mb-1">
+            <span class="text-sky-400">©️ 3. Bản quyền</span>
+            <span id="stat-val-3" class="text-white font-extrabold">100%</span>
+          </div>
+          <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+            <div id="stat-bar-3" class="h-full bg-sky-500 transition-all duration-500 w-full"></div>
+          </div>
+        </div>
+
+        <!-- Chỉ số 4: Văn hóa ứng xử -->
+        <div class="bg-slate-950/90 border border-slate-800 px-3 py-1.5 rounded-xl flex flex-col justify-center min-w-[125px]">
+          <div class="flex justify-between items-center text-[11px] font-bold mb-1">
+            <span class="text-amber-400">💖 4. Ứng xử</span>
+            <span id="stat-val-4" class="text-white font-extrabold">100%</span>
+          </div>
+          <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+            <div id="stat-bar-4" class="h-full bg-amber-500 transition-all duration-500 w-full"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT: CỘT ĐIỆN THOẠI MÔ PHỎNG & CỘT NỘI TÂM + LỰA CHỌN -->
+  <main class="flex-1 w-full max-w-6xl mx-auto px-3 py-2 grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch overflow-hidden">
+    
+    <!-- CỘT TRÁI (5/12): CHIẾC ĐIỆN THOẠI CỦA NAM (TIN NHẮN / MẠNG XÃ HỘI / CẢNH BÁO) -->
+    <div class="lg:col-span-5 flex flex-col h-[420px] lg:h-[calc(100vh-125px)]">
+      <div id="phone-frame" class="flex-1 bg-slate-950 border-[3px] border-slate-700 rounded-[32px] shadow-2xl flex flex-col overflow-hidden relative transition-all duration-300">
+        
+        <!-- Tai thỏ & Thanh trạng thái Điện thoại -->
+        <div class="bg-slate-900 px-5 pt-2.5 pb-2 border-b border-slate-800 flex items-center justify-between text-[11px] text-slate-400 font-bold">
+          <span id="phone-clock">21:15</span>
+          <div class="w-20 h-3.5 bg-black rounded-full mx-auto"></div>
+          <div class="flex items-center gap-1.5">
+            <span>5G</span>
+            <span>🔋 84%</span>
+          </div>
+        </div>
+
+        <!-- Thanh tiêu đề Ứng dụng trong Điện thoại -->
+        <div id="phone-app-header" class="bg-slate-900/95 px-4 py-2.5 border-b border-slate-800 flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div id="app-avatar" class="w-9 h-9 rounded-full bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-base font-black shadow">
+              💬
+            </div>
+            <div>
+              <div id="app-name" class="text-xs sm:text-sm font-black text-white">ZaloPay / Chat Nhóm Lớp 6A</div>
+              <div id="app-status" class="text-[10px] text-emerald-400 font-semibold flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Đang hoạt động
+              </div>
+            </div>
+          </div>
+          <span id="app-tag" class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-slate-700">
+            Tin nhắn
+          </span>
+        </div>
+
+        <!-- Vùng luồng tin nhắn / bài đăng mạng xã hội -->
+        <div id="phone-feed" class="flex-1 p-3.5 overflow-y-auto space-y-3 bg-gradient-to-b from-slate-950 to-slate-900">
+          <!-- Tin nhắn được render động tại đây -->
+        </div>
+
+        <!-- Hiệu ứng đang gõ phím (Typing Indicator) -->
+        <div id="typing-indicator" class="hidden px-4 py-2 bg-slate-900/90 border-t border-slate-800/80 flex items-center gap-2 text-xs text-slate-400 font-semibold">
+          <div class="flex items-center gap-1 bg-slate-800 px-2.5 py-1.5 rounded-full">
+            <span class="w-1.5 h-1.5 bg-sky-400 rounded-full dot-1"></span>
+            <span class="w-1.5 h-1.5 bg-sky-400 rounded-full dot-2"></span>
+            <span class="w-1.5 h-1.5 bg-sky-400 rounded-full dot-3"></span>
+          </div>
+          <span id="typing-text">Bạn thân đang nhắn tin...</span>
+        </div>
+
+        <!-- Thanh đáy điện thoại giả lập -->
+        <div class="bg-slate-900 px-4 py-2 border-t border-slate-800 flex items-center justify-center">
+          <div class="w-28 h-1 bg-slate-700 rounded-full"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CỘT PHẢI (7/12): DIỄN BIẾN TÂM LÝ, ÁP LỰC ĐÁM ĐÔNG & CÁC LỰA CHỌN RẼ NHÁNH -->
+    <div class="lg:col-span-7 flex flex-col justify-between h-auto lg:h-[calc(100vh-125px)] overflow-y-auto pr-1 space-y-3">
+      
+      <!-- Khối Bối cảnh & Độc thoại nội tâm của Nam -->
+      <div id="narrative-card" class="bg-slate-900/90 border-2 border-slate-800 rounded-3xl p-5 sm:p-6 shadow-2xl space-y-4 transition-all duration-300">
+        
+        <!-- Nhãn trạng thái tâm lý & Áp lực bạn bè -->
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
+          <div class="flex items-center gap-2">
+            <span id="mood-emoji" class="text-2xl heart-beat">😰</span>
+            <div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">TRẠNG THÁI TÂM LÝ CỦA NAM</div>
+              <div id="mood-text" class="text-xs sm:text-sm font-extrabold text-amber-300">Đang bối rối vì sợ bạn giận</div>
+            </div>
+          </div>
+
+          <div id="pressure-badge" class="px-3 py-1 rounded-xl bg-rose-950/80 border border-rose-500/40 text-rose-300 text-xs font-extrabold flex items-center gap-1.5">
+            <span>🔥 Áp lực bạn bè:</span>
+            <span id="pressure-level">Rất cao</span>
+          </div>
+        </div>
+
+        <!-- Đoạn văn dẫn chuyện sâu lắng -->
+        <div class="space-y-2.5">
+          <div class="text-xs font-bold text-cyan-400 uppercase tracking-wider flex items-center gap-1.5">
+            <span>📖</span> DIỄN BIẾN CÂU CHUYỆN:
+          </div>
+          <p id="story-context" class="text-sm sm:text-base text-slate-100 leading-relaxed font-medium">
+            <!-- Nội dung dẫn chuyện -->
+          </p>
+        </div>
+
+        <!-- Tiếng nói bên trong suy nghĩ của Nam (Inner Monologue) -->
+        <div class="bg-indigo-950/40 border-l-4 border-indigo-400 p-3.5 rounded-r-2xl">
+          <div class="text-[11px] font-extrabold text-indigo-300 uppercase mb-1 flex items-center gap-1.5">
+            <span>💭</span> Suy nghĩ thoáng qua trong đầu Nam:
+          </div>
+          <p id="inner-thought" class="text-xs sm:text-sm text-indigo-100 italic leading-relaxed">
+            <!-- Độc thoại nội tâm dễ mủi lòng -->
+          </p>
+        </div>
+
+        <!-- Quy tắc gợi nhớ -->
+        <div id="rule-reminder-box" class="bg-slate-950/80 border border-slate-800 rounded-2xl p-3 flex items-center gap-2.5 text-xs text-slate-300">
+          <span class="text-lg">📌</span>
+          <span id="rule-reminder-text" class="font-semibold">Quy tắc cần nhớ: Không chia sẻ mật khẩu và thông tin cá nhân.</span>
+        </div>
+      </div>
+
+      <!-- Khối CÁC LỰA CHỌN QUYẾT ĐỊNH (CHOICES) -->
+      <div class="bg-slate-900/95 border-2 border-cyan-500/40 rounded-3xl p-4 sm:p-5 shadow-2xl">
+        <div class="text-xs sm:text-sm font-black text-amber-300 uppercase tracking-wider mb-3 flex items-center justify-between">
+          <span>⚡ NẾU LÀ NAM, EM SẼ QUYẾT ĐỊNH NHƯ THẾ NÀO?</span>
+          <span id="step-indicator" class="text-[11px] text-slate-400 font-bold">Bước quyết định</span>
+        </div>
+
+        <div id="choices-container" class="space-y-2.5">
+          <!-- Các nút lựa chọn được sinh tự động -->
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- MODAL: KẾT THÚC TỪNG TÌNH HUỐNG & ĐÚC KẾT BÀI HỌC SÂU SẮC -->
+  <div id="modal-reflection" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-slate-900 border-2 border-cyan-400 rounded-3xl max-w-xl w-full p-6 sm:p-7 text-white shadow-2xl my-auto animate-scaleUp">
+      <div class="flex items-center gap-3 border-b border-slate-800 pb-4 mb-4">
+        <div id="reflect-icon" class="w-14 h-14 rounded-2xl bg-cyan-500/20 border border-cyan-400 flex items-center justify-center text-3xl shrink-0">
+          💡
+        </div>
+        <div>
+          <div id="reflect-tag" class="text-xs font-black uppercase tracking-widest text-cyan-400">KẾT QUẢ XỬ LÝ TÌNH HUỐNG</div>
+          <h3 id="reflect-title" class="text-xl sm:text-2xl font-black text-white">Bài Học Sau Cơn Bão</h3>
+        </div>
+      </div>
+
+      <!-- Kết cục câu chuyện -->
+      <div class="space-y-3 mb-5">
+        <div id="reflect-outcome-box" class="p-4 rounded-2xl border text-sm sm:text-base leading-relaxed font-semibold">
+          <!-- Mô tả kết cục -->
+        </div>
+
+        <!-- Góc nhìn tâm lý sâu lắng -->
+        <div class="bg-slate-950/90 border border-slate-800 p-4 rounded-2xl space-y-1.5">
+          <div class="text-xs font-extrabold text-amber-300 uppercase flex items-center gap-1.5">
+            <span>🌱</span> Góc nhìn trưởng thành dành cho em:
+          </div>
+          <p id="reflect-lesson" class="text-xs sm:text-sm text-slate-200 leading-relaxed">
+            <!-- Lời khuyên tâm lý & bài học SGK -->
+          </p>
+        </div>
+      </div>
+
+      <div class="flex justify-end">
+        <button id="btn-next-chapter" onclick="proceedToNextChapter()" class="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-black text-sm shadow-xl border border-cyan-300 active:scale-95 transition cursor-pointer">
+          TIẾP TỤC TÌNH HUỐNG TIẾP THEO ➔
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: TỔNG KẾT HÀNH TRÌNH & CHỨNG NHẬN BẢN LĨNH SỐ -->
+  <div id="modal-final" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl hidden flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+    <div class="bg-slate-900 border-2 border-amber-400 rounded-3xl max-w-2xl w-full p-5 sm:p-7 text-white shadow-2xl my-auto">
+      
+      <div class="text-center mb-5">
+        <div id="final-emoji" class="inline-block p-3.5 bg-amber-500/20 border-2 border-amber-400 rounded-full text-4xl mb-2 shadow-lg">
+          🏆
+        </div>
+        <div class="text-xs font-black tracking-widest text-amber-400 uppercase">KHÉP LẠI NHẬT KÝ SỐ CỦA NAM</div>
+        <h2 id="final-rank-title" class="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-cyan-300 to-emerald-300 mt-1">
+          CÔNG DÂN SỐ BẢN LĨNH & THÔNG THÁI
+        </h2>
+      </div>
+
+      <!-- Bảng điểm 4 quy tắc -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-5">
+        <div class="bg-slate-950 border border-emerald-500/40 p-3 rounded-2xl text-center">
+          <div class="text-lg">🛡️</div>
+          <div class="text-[11px] text-slate-400 font-bold mt-0.5">1. Bảo mật</div>
+          <div id="final-stat-1" class="text-base sm:text-lg font-black text-emerald-400">100%</div>
+        </div>
+        <div class="bg-slate-950 border border-lime-500/40 p-3 rounded-2xl text-center">
+          <div class="text-lg">🔍</div>
+          <div class="text-[11px] text-slate-400 font-bold mt-0.5">2. Kiểm tin</div>
+          <div id="final-stat-2" class="text-base sm:text-lg font-black text-lime-400">100%</div>
+        </div>
+        <div class="bg-slate-950 border border-sky-500/40 p-3 rounded-2xl text-center">
+          <div class="text-lg">©️</div>
+          <div class="text-[11px] text-slate-400 font-bold mt-0.5">3. Bản quyền</div>
+          <div id="final-stat-3" class="text-base sm:text-lg font-black text-sky-400">100%</div>
+        </div>
+        <div class="bg-slate-950 border border-amber-500/40 p-3 rounded-2xl text-center">
+          <div class="text-lg">💖</div>
+          <div class="text-[11px] text-slate-400 font-bold mt-0.5">4. Ứng xử</div>
+          <div id="final-stat-4" class="text-base sm:text-lg font-black text-amber-400">100%</div>
+        </div>
+      </div>
+
+      <!-- Nhận xét hành trình tâm lý -->
+      <div class="bg-slate-950/90 border border-cyan-500/40 rounded-2xl p-4 mb-5">
+        <div class="text-xs font-extrabold text-cyan-300 uppercase mb-1.5 flex items-center gap-1.5">
+          <span>📝</span> ĐÚC KẾT HÀNH TRÌNH CỦA EM:
+        </div>
+        <p id="final-summary-text" class="text-xs sm:text-sm text-slate-200 leading-relaxed">
+          <!-- Lời nhận xét tổng hợp -->
+        </p>
+      </div>
+
+      <!-- 4 Quy tắc ghi nhớ chuẩn SGK -->
+      <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 mb-6 space-y-2 text-xs">
+        <div class="font-black text-amber-300 uppercase tracking-wider mb-1">📌 4 QUY TẮC VÀNG KHI DÙNG INTERNET:</div>
+        <div class="flex items-start gap-2 text-slate-300"><span class="text-emerald-400 font-bold">1.</span> <span><b>Không chia sẻ</b> mật khẩu và thông tin cá nhân như địa chỉ, số điện thoại, mã OTP cho bất kỳ ai.</span></div>
+        <div class="flex items-start gap-2 text-slate-300"><span class="text-lime-400 font-bold">2.</span> <span><b>Kiểm tra nguồn</b> thông tin chính thống trước khi tin tưởng hoặc chia sẻ lên mạng.</span></div>
+        <div class="flex items-start gap-2 text-slate-300"><span class="text-sky-400 font-bold">3.</span> <span><b>Tôn trọng bản quyền</b>, không tự ý sao chép tài liệu, hình ảnh của người khác khi chưa được phép.</span></div>
+        <div class="flex items-start gap-2 text-slate-300"><span class="text-amber-400 font-bold">4.</span> <span><b>Ứng xử lịch sự</b>, không xúc phạm, chê bai hay tiếp tay bắt nạt người khác trên mạng.</span></div>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-3">
+        <button onclick="restartWholeGame()" class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 text-white font-black text-sm shadow-xl border border-cyan-300 active:scale-95 transition cursor-pointer">
+          🔄 TRẢI NGHIỆM LẠI CÁC NHÁNH LỰA CHỌN KHÁC
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT ENGINE: KỊCH BẢN PHÂN NHÁNH SÂU LẮNG & ÂM THANH -->
+  <script>
+    // --- 1. HỆ THỐNG ÂM THANH TỔNG HỢP (WEB AUDIO API) ---
+    let audioCtx = null;
+    let isMuted = false;
+
+    function getAudio() {
+      if (isMuted) return null;
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function toggleMute() {
+      isMuted = !isMuted;
+      document.getElementById('btn-sound').innerText = isMuted ? '🔇 Âm thanh: Tắt' : '🔊 Âm thanh: Bật';
+    }
+
+    function playSfx(type) {
+      try {
+        const ctx = getAudio();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+
+        if (type === 'msg') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(587.33, now);
+          osc.frequency.exponentialRampToValueAtTime(880, now + 0.08);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.16);
+        } else if (type === 'alert') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(220, now);
+          osc.frequency.setValueAtTime(165, now + 0.15);
+          gain.gain.setValueAtTime(0.15, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.46);
+        } else if (type === 'good') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(523.25, now);
+          osc.frequency.setValueAtTime(659.25, now + 0.1);
+          osc.frequency.setValueAtTime(783.99, now + 0.2);
+          gain.gain.setValueAtTime(0.16, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.46);
+        }
+      } catch (e) {}
+    }
+
+    // --- 2. DỮ LIỆU 4 CHƯƠNG TÌNH HUỐNG PHÂN NHÁNH SÂU SẮC ---
+    const STORY_CHAPTERS = [
+      // =========================================================================
+      // CHƯƠNG 1: QUY TẮC 1 - KHÔNG CHIA SẺ MẬT KHẨU & THÔNG TIN CÁ NHÂN (4-5 TẦNG XOÁY)
+      // =========================================================================
+      {
+        id: 1,
+        ruleIndex: 1,
+        subtitle: "TÌNH HUỐNG 1 / 4 • BẢO MẬT THÔNG TIN",
+        title: "Chiếc Bẫy 'Anh Em Chí Cốt' & Mã OTP Định Mệnh",
+        ruleReminder: "Không chia sẻ mật khẩu và thông tin cá nhân như địa chỉ, số điện thoại, mã xác thực OTP.",
+        clock: "20:45",
+        appHeader: {
+          avatar: "🎮",
+          name: "Tuấn (Bạn thân chí cốt)",
+          status: "Đang nhắn tin rất gấp...",
+          tag: "Tin nhắn riêng"
+        },
+        nodes: {
+          // --- TẦNG 1: KHỞI ĐẦU BẪY ---
+          start: {
+            moodEmoji: "😰",
+            moodText: "Bất ngờ và lúng túng",
+            pressure: "Mức 1: Cầu cứu gấp gáp",
+            isCrisis: false,
+            messages: [
+              { sender: "Tuấn", side: "left", time: "20:43", text: "Nam ơi cứu tớ với! Chỉ có cậu mới cứu được tớ lúc này thôi 😭" },
+              { sender: "Tuấn", side: "left", time: "20:44", text: "Tớ đang nhận gói quà sự kiện VIP sắp hết giờ, mà số điện thoại tớ bị nghẽn mạng. Tớ lỡ nhập số máy mẹ cậu để nhận mã rồi!" },
+              { sender: "sms", side: "system", text: "📩 [HỆ THỐNG]: Mã OTP kích hoạt ví điện tử & tài khoản của bạn là 849201. Tuyệt đối KHÔNG chia sẻ mã này cho bất kỳ ai." },
+              { sender: "Tuấn", side: "left", time: "20:45", text: "Đọc nhanh 6 số vừa gửi về máy đi Nam! Còn đúng 45 giây thôi, anh em chơi thân từ nhỏ chẳng lẽ cậu tiếc tớ mấy con số? Nhanh lên!" }
+            ],
+            context: "Tuấn hối thúc dồn dập từng giây. Chiếc điện thoại của mẹ để trên bàn vừa rung lên tin nhắn chứa mã OTP ví điện tử.",
+            innerThought: "“Tuấn là bạn thân nhất của mình... Nếu mình từ chối thẳng thừng, ngày mai lên lớp chắc chắn Tuấn sẽ giận và không thèm nhìn mặt mình nữa...”",
+            choices: [
+              {
+                label: "Đọc ngay 6 con số (849201) cho Tuấn để bạn kịp nhận quà sự kiện.",
+                statEffect: { 1: -15 },
+                nextNode: "fail_trap_1"
+              },
+              {
+                label: "Hỏi lại cẩn thận: 'Sao tin nhắn lại ghi là mã ví điện tử? Cậu chụp màn hình trang web đó cho tớ xem đã!'",
+                statEffect: { 1: 0 },
+                nextNode: "press_push_1"
+              },
+              {
+                label: "Từ chối khéo: 'Mã này gắn với máy của mẹ tớ, mẹ dặn không được đọc cho ai hết. Cậu đổi số khác đi!'",
+                statEffect: { 1: 0 },
+                nextNode: "press_push_guilt"
+              }
+            ]
+          },
+
+          // === NHÁNH CỐ GẮNG CHỌN ĐÚNG: BỊ DỒN ÉP TÂM LÝ 4 LẦN LIÊN TIẾP ===
+          // TẦNG 2A (Ép bằng ơn nghĩa & tự ái):
+          press_push_1: {
+            moodEmoji: "😟",
+            moodText: "Bị khích tướng và đe dọa tình bạn",
+            pressure: "Mức 2: Đánh vào lòng tự trọng",
+            isCrisis: false,
+            messages: [
+              { sender: "Nam", side: "right", time: "20:46", text: "Sao tin nhắn ghi là ví điện tử vậy Tuấn? Cậu chụp ảnh màn hình web cho tớ xem đã." },
+              { sender: "Tuấn", side: "left", time: "20:46", text: "Trời đất ơi! Có 6 con số mà cậu nghi ngờ bạn thân như tội phạm vậy à?" },
+              { sender: "Tuấn", side: "left", time: "20:47", text: "Hôm trước bài kiểm tra Tin tớ chỉ bài cho cậu, hôm nay tớ nhờ một việc sống còn thì cậu soi mói? Cậu không đọc thì coi như tụi mình chấm dứt tình bạn ở đây!" }
+            ],
+            context: "Tuấn đem ơn nghĩa cũ ra để ép buộc. Đòn tâm lý này đánh thẳng vào sự cả nể và nỗi sợ bị bạn bè coi là kẻ vô ơn của Nam.",
+            innerThought: "“Tuấn nói đúng, hôm trước Tuấn vừa cứu bài kiểm tra của mình... Nếu mình cứng nhắc quá, có phải mình là đứa bạn tồi tệ phản bội không?”",
+            choices: [
+              {
+                label: "Cả nể vì sợ mang tiếng vô ơn: Đọc mã 849201 cho Tuấn và dặn bạn dùng xong nhớ xóa.",
+                statEffect: { 1: -15 },
+                nextNode: "fail_trap_1"
+              },
+              {
+                label: "Đề nghị xác minh: 'Cậu bật gọi video call lên nhìn mặt nhau 5 giây thôi, tớ xác nhận đúng là cậu thì tớ tính tiếp!'",
+                statEffect: { 1: 0 },
+                nextNode: "press_push_2_video"
+              }
+            ]
+          },
+
+          // TẦNG 2B (Ép bằng đóng vai nạn nhân khóc lóc):
+          press_push_guilt: {
+            moodEmoji: "🥺",
+            moodText: "Cảm giác tội lỗi dâng trào",
+            pressure: "Mức 2: Đóng vai nạn nhân khóc lóc",
+            isCrisis: false,
+            messages: [
+              { sender: "Nam", side: "right", time: "20:46", text: "Mã máy mẹ tớ dặn không được cho ai đâu Tuấn ơi." },
+              { sender: "Tuấn", side: "left", time: "20:46", text: "Cậu biết nick game này tớ cày ngày cày đêm từ năm ngoái mà... 😭" },
+              { sender: "Tuấn", side: "left", time: "20:47", text: "Không có mã này là tài khoản tớ bị thu hồi mất trắng luôn! Nam nỡ nhìn công sức 1 năm của tớ đổ sông đổ biển chỉ vì sự sợ sệt vô lý của cậu à?" }
+            ],
+            context: "Tuấn chuyển sang khóc lóc thảm thiết, biến Nam thành kẻ tàn nhẫn gián tiếp phá hoại công sức của bạn.",
+            innerThought: "“Nhìn bạn khóc thế kia tội quá... Chắc không có chuyện gì đâu, chỉ là một cái mã thôi mà...”",
+            choices: [
+              {
+                label: "Mềm lòng thương bạn: 'Thôi được rồi nín đi, mã là 849201 đấy, làm nhanh lên!'",
+                statEffect: { 1: -15 },
+                nextNode: "fail_trap_1"
+              },
+              {
+                label: "Giữ vững nguyên tắc: 'Mất nick thì tiếc thật, nhưng mã bảo mật thì tớ tuyệt đối không giao được. Để mai tớ cày lại cùng cậu!'",
+                statEffect: { 1: 0 },
+                nextNode: "press_push_3_gang"
+              }
+            ]
+          },
+
+          // TẦNG 3: Ép bằng né tránh video + tối hậu thư thời gian
+          press_push_2_video: {
+            moodEmoji: "🥶",
+            moodText: "Phát hiện sự bất thường",
+            pressure: "Mức 3: Né tránh và dồn ép thời gian",
+            isCrisis: false,
+            messages: [
+              { sender: "Nam", side: "right", time: "20:47", text: "Bật video call đi Tuấn, nhìn thấy mặt cậu là tớ yên tâm ngay!" },
+              { sender: "Tuấn", side: "left", time: "20:48", text: "Camera điện thoại tớ bị vỡ kính từ chiều chưa sửa! Cậu đừng có bày trò câu giờ nữa!" },
+              { sender: "Tuấn", side: "left", time: "20:48", text: "Hệ thống đang đếm ngược 15 giây cuối cùng! 15... 14... 13... Nam ơi xin cậu đấy, nhấn gửi 6 số giùm tớ đi mà!!" }
+            ],
+            context: "Màn hình điện thoại liên tục nhảy đếm ngược giả lập. Sự căng thẳng nghẹt thở bao trùm khi đối phương liên tục gào thét xin xỏ.",
+            innerThought: "“Đếm ngược sắp hết rồi! Lỡ nó là thật mà mình làm bạn mất nick thì ngày mai đối mặt thế nào đây? Hay mình gửi đại cho xong?”",
+            choices: [
+              {
+                label: "Cuống cuồng vì áp lực đếm ngược: Gõ vội dãy số 849201 gửi qua tin nhắn.",
+                statEffect: { 1: -20 },
+                nextNode: "fail_trap_1"
+              },
+              {
+                label: "Quyết không nhượng bộ: 'Camera hỏng thì gọi điện thoại thông thường nghe giọng nói ngay lập tức!'",
+                statEffect: { 1: 0 },
+                nextNode: "press_push_3_gang"
+              }
+            ]
+          },
+
+          // TẦNG 4: Ép bằng hội đồng & bêu rếu tập thể
+          press_push_3_gang: {
+            moodEmoji: "😰",
+            moodText: "Bị lôi kéo nhóm bạn vào gây áp lực",
+            pressure: "Mức 4: Đe dọa bêu rếu trước tập thể",
+            isCrisis: false,
+            messages: [
+              { sender: "Tuấn", side: "left", time: "20:49", text: "Được lắm! Tớ vừa chụp toàn bộ tin nhắn cậu từ chối cứu bạn thân gửi vào nhóm kín 6A rồi!" },
+              { sender: "Tuấn", side: "left", time: "20:50", text: "Tụi thằng Huy, thằng Long đang bảo cậu là đứa ích kỷ, sống giả tạo. Cậu muốn tớ xóa bài bêu rếu đó thì gửi mã ngay, hoặc mai lên lớp tự mà chịu cảnh bị cả lớp cạch mặt!" }
+            ],
+            context: "Đối phương tung đòn hiểm độc nhất: Đe dọa biến Nam thành tâm điểm tẩy chay của cả lớp vào sáng ngày mai.",
+            innerThought: "“Tẩy chay ư? Cả lớp sẽ nhìn mình với ánh mắt khinh bỉ sao... Nỗi sợ bị cô lập ở trường học đang bóp nghẹt cổ họng mình...”",
+            choices: [
+              {
+                label: "Khuất phục trước nỗi sợ tẩy chay: Gửi mã OTP để Tuấn xóa bài bêu rếu trên nhóm lớp.",
+                statEffect: { 1: -25 },
+                nextNode: "fail_trap_1"
+              },
+              {
+                label: "Bản lĩnh đứng vững trước đe dọa: 'Cậu muốn bêu rếu thế nào tùy cậu. Nhưng lấy danh dự ép bạn phạm luật bảo mật thì tớ không bao giờ thỏa hiệp!'",
+                statEffect: { 1: 0 },
+                nextNode: "press_push_4_final"
+              }
+            ]
+          },
+
+          // TẦNG 5: Đòn cân não cuối cùng (Vạch trần toàn bộ)
+          press_push_4_final: {
+            moodEmoji: "😤",
+            moodText: "Cắt đứt trò thao túng",
+            pressure: "Mức 5: Đòn thăm dò ngược quyết định",
+            isCrisis: false,
+            messages: [
+              { sender: "Nam", side: "right", time: "20:51", text: "Tớ vừa lấy máy bàn gọi thẳng cho mẹ của Tuấn rồi. Mẹ cậu bảo cậu đang ngồi ăn cơm dưới bếp chứ không hề cầm máy!" },
+              { sender: "Tuấn", side: "left", time: "20:51", text: "Hả... Mày... Mày gọi thật à?!" },
+              { sender: "Nam", side: "right", time: "20:52", text: "Kẻ mạo danh lộ mặt rồi đúng không? Đừng hòng lừa tao!" }
+            ],
+            context: "Cú lật bài ngoạn mục! Bằng sự tỉnh táo và các biện pháp kiểm chứng độc lập, Nam đã khiến kẻ giả mạo cứng họng hoàn toàn.",
+            innerThought: "“May quá... Suýt chút nữa vì sợ mất bạn mà mình đã sập cái bẫy tinh vi của kẻ xấu!”",
+            choices: [
+              {
+                label: "Chụp bằng chứng, chặn tài khoản bị hack và nhắn tin cảnh báo ngay cho cả lớp.",
+                statEffect: { 1: +10 },
+                nextNode: "call_check_end"
+              }
+            ]
+          },
+
+          // === NHÁNH CHỌN SAI: HẬU QUẢ XOÁY SÂU 4-5 BƯỚC LIÊN TIẾP ===
+          // TẦNG 1 SAI: Đưa mã OTP -> Mất tài khoản
+          fail_trap_1: {
+            moodEmoji: "😨",
+            moodText: "Linh tính chuyện chẳng lành",
+            pressure: "Vòng xoáy 1: Mất quyền kiểm soát",
+            isCrisis: true,
+            messages: [
+              { sender: "Nam", side: "right", time: "20:51", text: "Mã là 849201 đó. Cậu làm nhanh đi rồi xóa giùm tớ!" },
+              { sender: "Tuấn", side: "left", time: "20:52", text: "Ok đã nhận! Đợi tí hệ thống xử lý..." },
+              { sender: "sms", side: "system", text: "🚨 [CẢNH BÁO BẢO MẬT]: Tài khoản mạng xã hội của Mẹ liên kết số này đã bị ĐỔI MẬT KHẨU và ĐỔI SỐ ĐIỆN THOẠI KHÔI PHỤC!" },
+              { sender: "Tuấn", side: "left", time: "20:53", text: "Ê Nam ơi, hệ thống bảo số này liên kết với thẻ ngân hàng, nó đòi thêm ảnh chụp 2 mặt Căn cước công dân hoặc thẻ ATM của mẹ cậu mới kích hoạt được. Chụp nhanh gửi nốt đi!" }
+            ],
+            context: "Một nhát dao đầu tiên! Tài khoản của mẹ lập tức bị cướp quyền điều khiển. Người kia lại tiếp tục đòi thêm thông tin thẻ ngân hàng nhạy cảm.",
+            innerThought: "“Trời đất ơi! Mất nick mẹ rồi... Nhưng người kia bảo phải chụp nốt thẻ mới lấy lại được... Giờ làm sao đây?”",
+            choices: [
+              {
+                label: "Nhắm mắt làm liều: Lén mở ví của mẹ, chụp mặt trước thẻ ngân hàng gửi qua để mong cứu vãn.",
+                statEffect: { 1: -25 },
+                nextNode: "fail_trap_2_blackmail"
+              },
+              {
+                label: "Hoảng hốt chất vấn: 'Mày không phải thằng Tuấn! Trả nick lại cho mẹ tao mau!!'",
+                statEffect: { 1: -10 },
+                nextNode: "fail_trap_2_blackmail"
+              }
+            ]
+          },
+
+          // TẦNG 2 SAI: Kẻ gian lộ mặt & tống tiền dồn ép
+          fail_trap_2_blackmail: {
+            moodEmoji: "😱",
+            moodText: "Bị kẻ lừa đảo lộ mặt tống tiền",
+            pressure: "Vòng xoáy 2: Khống chế tinh thần",
+            isCrisis: true,
+            messages: [
+              { sender: "Kẻ mạo danh", side: "left", time: "20:54", text: "Biết rồi thì tao nói thẳng luôn: Thằng Tuấn bị tao hack từ chiều rồi con gà ạ! 😈" },
+              { sender: "Kẻ mạo danh", side: "left", time: "20:55", text: "Bây giờ nick của mẹ mày đang nằm trong tay tao. Tao đang chuẩn bị gửi tin nhắn vay tiền đến tất cả bạn bè, đối tác làm ăn và sếp của mẹ mày!" },
+              { sender: "Kẻ mạo danh", side: "left", time: "20:55", text: "Muốn tao xóa tin nhắn và trả lại nick? Mua ngay cái thẻ nạp game 200k gửi mã thẻ qua đây trong 5 phút. Cấm được nói cho bố mẹ mày biết!" }
+            ],
+            context: "Bẫy siết chặt nghẹt thở! Kẻ gian dùng danh dự nghề nghiệp của mẹ Nam để tống tiền, ép Nam phải tự giải quyết trong bí mật.",
+            innerThought: "“Nếu kẻ đó nhắn tin bậy bạ cho sếp của mẹ thì mẹ sẽ bị đuổi việc mất... Trong heo đất mình có đúng 200k tiền tiêu vặt, hay mình đưa cho nó để êm chuyện?”",
+            choices: [
+              {
+                label: "Đập heo đất, chạy vội ra quán tạp hóa mua thẻ 200k nạp cho kẻ tống tiền để mong chuộc lại nick.",
+                statEffect: { 1: -30 },
+                nextNode: "fail_trap_3_bleed"
+              },
+              {
+                label: "Nhắn tin van xin: 'Em chỉ là học sinh không có tiền đâu, anh tha cho mẹ em đi mà...'",
+                statEffect: { 1: -15 },
+                nextNode: "fail_trap_3_bleed"
+              },
+              {
+                label: "Cắt đứt nỗi sợ: Không đưa tiền, chạy thẳng xuống phòng khách bật khóc thú nhận mọi chuyện với mẹ.",
+                statEffect: { 1: +15 },
+                nextNode: "recover_otp_end"
+              }
+            ]
+          },
+
+          // TẦNG 3 SAI: Càng nhượng bộ càng bị tống tiền gấp bội
+          fail_trap_3_bleed: {
+            moodEmoji: "😭",
+            moodText: "Rơi vào bẫy tống tiền không đáy",
+            pressure: "Vòng xoáy 3: Bị ép mượn tiền người khác",
+            isCrisis: true,
+            messages: [
+              { sender: "Kẻ mạo danh", side: "left", time: "21:05", text: "Haha 200k chỉ là phí mở khóa thôi! Muốn tao trả lại mật khẩu thì nộp thêm 1 triệu nữa!" },
+              { sender: "Nam", side: "right", time: "21:06", text: "Em hết sạch tiền rồi anh ơi! Sao anh lật lọng thế?!" },
+              { sender: "Kẻ mạo danh", side: "left", time: "21:07", text: "Hết tiền thì lấy nick mày nhắn tin vay đứa khác trong lớp! Không có 1 triệu trước 22h, tao sẽ đăng ảnh bôi nhọ mẹ mày lên toàn bộ các hội nhóm!" }
+            ],
+            context: "Quy luật tàn nhẫn của không gian mạng: Kẻ xấu không bao giờ dừng lại khi thấy nạn nhân yếu đuối. Chúng ép Nam trở thành kẻ đi lừa đảo bạn bè tiếp theo.",
+            innerThought: "“Mình đã mất 200k mà nó vẫn đòi 1 triệu... Nó còn ép mình đi lừa tiền các bạn khác... Mình phải làm sao đây trời ơi...”",
+            choices: [
+              {
+                label: "Tuyệt vọng nghe lời xúi bậy: Lấy nick mình đi nhắn tin hỏi vay tiền các bạn trong lớp.",
+                statEffect: { 1: -40 },
+                nextNode: "disaster_otp"
+              },
+              {
+                label: "Thức tỉnh trong nước mắt: Nhận ra không thể thỏa hiệp với kẻ ác, chạy ngay đi báo cho cha mẹ can thiệp khẩn cấp.",
+                statEffect: { 1: +10 },
+                nextNode: "recover_otp_end"
+              }
+            ]
+          },
+
+          disaster_otp: {
+            isEnd: true,
+            outcomeType: "failed",
+            title: "Sụp Đổ Toàn Diện Vì Lún Sâu Vào Cạm Bẫy Tống Tiền",
+            outcomeText: "Kẻ lừa đảo chiếm đoạt toàn bộ tiền bạc, đồng thời uy tín gia đình bị ảnh hưởng nghiêm trọng khi các tin nhắn vay tiền gửi đến đồng nghiệp của mẹ. Nam vừa mất hết tiền tiết kiệm, vừa làm liên lụy đến bạn bè và gánh chịu nỗi ân hận khôn nguôi.",
+            lesson: "Một nhượng bộ nhỏ ban đầu trên mạng có thể kéo theo chuỗi sụp đổ dây chuyền. Tuyệt đối không bao giờ chia sẻ mã OTP cho bất kỳ ai, và khi phát hiện dấu hiệu lừa đảo, báo ngay cho người lớn là con đường duy nhất!"
+          },
+
+          recover_otp_end: {
+            isEnd: true,
+            outcomeType: "recovered",
+            title: "Dũng Cảm Cắt Đứt Vòng Xoáy Thao Túng",
+            outcomeText: "Dù đã trót mắc sai lầm ban đầu vì cả nể, nhưng quyết định không tiếp tục nộp tiền và dũng cảm thú nhận với mẹ đã cứu cả gia đình. Mẹ Nam đã kịp gọi điện tổng đài ngân hàng phong tỏa tài khoản trong thời gian vàng và thu hồi lại nick mạng xã hội.",
+            lesson: "Kẻ xấu luôn dùng nỗi sợ hãi để ép nạn nhân lún sâu hơn. Khi lỡ mắc sai lầm, người dũng cảm là người biết dừng lại đúng lúc và tìm kiếm sự trợ giúp từ cha mẹ, thầy cô."
+          },
+
+          call_check_end: {
+            isEnd: true,
+            outcomeType: "perfect",
+            title: "Bản Lĩnh Thép Vượt Qua 4 Đợt Sóng Thao Túng",
+            outcomeText: "Trải qua liên tiếp các đòn ép từ khích tướng, đóng vai nạn nhân đến đe dọa bêu rếu tập thể, Nam vẫn kiên định bảo vệ nguyên tắc bảo mật thông tin. Kẻ lừa đảo đã hoàn toàn bất lực trước cái đầu lạnh của Nam!",
+            lesson: "Kẻ lừa đảo chuyên nghiệp luôn đánh vào tình bạn, lòng cả nể và sự sợ hãi. Người có bản lĩnh số luôn biết kiểm chứng độc lập và kiên quyết nói KHÔNG với việc chia sẻ thông tin bảo mật."
+          }
+        }
+      },
+
+      // =========================================================================
+      // CHƯƠNG 2: KIỂM TRA NGUỒN TIN TRƯỚC KHI TIN HOẶC CHIA SẺ (DỒN ÉP 4-5 TẦNG)
+      // =========================================================================
+      {
+        id: 2,
+        ruleIndex: 2,
+        subtitle: "TÌNH HUỐNG 2 / 4 • KIỂM CHỨNG NGUỒN TIN",
+        title: "Cơn Sốt 'Nghỉ Học Đột Xuất' & Cú Click Lúc Nửa Đêm",
+        ruleReminder: "Kiểm tra nguồn thông tin trước khi tin hoặc chia sẻ cho người khác.",
+        clock: "22:15",
+        appHeader: {
+          avatar: "🔥",
+          name: "Hội Săn Tin Nóng 6A (Nhóm Chat)",
+          status: "18 thành viên đang online",
+          tag: "Mạng xã hội"
+        },
+        nodes: {
+          // --- TẦNG 1: BẮT ĐẦU CƠN BÃO TIN GIẢ ---
+          start: {
+            moodEmoji: "🤩",
+            moodText: "Hưng phấn và xao động",
+            pressure: "Mức 1: Cả nhóm đang hò reo ăn mừng",
+            isCrisis: false,
+            messages: [
+              { sender: "Phương (Lớp phó)", side: "left", time: "22:12", text: "Tin chấn động cả nhà ơi!! Trang 'TinTucNong24h.xyz' vừa phát văn bản khẩn đóng dấu đỏ: Toàn trường nghỉ học 2 ngày tới vì vỡ ống nước ngầm! Share bài lên trang cá nhân còn nhận mã thẻ nạp 100k nữa!" },
+              { sender: "Hoàng", side: "left", time: "22:13", text: "Trời ơi thoát nạn rồi!! Mai thi 1 tiết Toán mà tớ chưa thuộc công thức nào! Tớ vừa share công khai và tag luôn cả lớp vào rồi!" },
+              { sender: "Phương", side: "left", time: "22:14", text: "@Nam: Cả nhóm share hết rồi, còn đúng một mình cậu thôi đó! Share lẹ đi Nam để nhóm mình mở rương quà chung, đừng có chậm chạp làm tụt mood cả hội!" }
+            ],
+            context: "Một bức ảnh chụp văn bản có mộc đỏ lòe loẹt kèm đường link lạ lẫm '.xyz'. Cả nhóm bạn thân đang đồng thanh ăn mừng và liên tục réo tên Nam.",
+            innerThought: "“Đến lớp phó học giỏi như Phương còn share thì chắc chắn là thật rồi! Mai đỡ phải thi Toán... Nhưng nếu mình không bấm share, cả hội sẽ mắng mình là kẻ phá đám...”",
+            choices: [
+              {
+                label: "Bấm Chia sẻ ngay lập tức lên trang cá nhân và gửi vào nhóm lớp kèm lời reo mừng: 'Mai được nghỉ rồi cả nhà ơi!'.",
+                statEffect: { 2: -15 },
+                nextNode: "fail_fake_1"
+              },
+              {
+                label: "Hỏi lại cẩn thận trong nhóm: 'Sao đuôi web lại là .xyz lạ thế? Để tớ vào trang web chính thức của trường xem có thông báo không đã.'",
+                statEffect: { 2: 0 },
+                nextNode: "press_fake_1_mock"
+              },
+              {
+                label: "Từ chối thẳng thắn: 'Mấy trang tặng thẻ cào câu tương tác này toàn lừa đảo thôi, các cậu đừng có nhẹ dạ tin theo!'",
+                statEffect: { 2: 0 },
+                nextNode: "press_fake_1_guilt"
+              }
+            ]
+          },
+
+          // === NHÁNH CHỌN ĐÚNG: BỊ DỒN ÉP TÂM LÝ 4-5 TẦNG LIÊN TIẾP ===
+          // TẦNG 2A: Chế giễu và công kích cá nhân
+          press_fake_1_mock: {
+            moodEmoji: "😒",
+            moodText: "Bị tập thể cười nhạo và chế giễu",
+            pressure: "Mức 2: Tấn công bằng sự chế nhạo",
+            isCrisis: false,
+            messages: [
+              { sender: "Hoàng", side: "left", time: "22:16", text: "Trời đất ơi, Nam lại bắt đầu làm màu như thể mình là thanh tra bộ giáo dục rồi đấy!" },
+              { sender: "Phương", side: "left", time: "22:17", text: "Con dấu đỏ chình ình có chữ ký hiệu trưởng kia kìa, cậu mù chữ à mà còn đòi kiểm tra? Web trường cả tháng chả buồn cập nhật một bài, ngồi đấy mà đợi!" },
+              { sender: "Hoàng", side: "left", time: "22:17", text: "Không share thì bấm Like và gõ bình luận xác nhận cho nhóm đủ chỉ tiêu nhận rương quà đi! Cậu cứ khó ở như ông già khó tính thế ai chơi cùng nổi?" }
+            ],
+            context: "Cả nhóm chuyển sang công kích cá nhân, biến sự cẩn trọng kiểm chứng của Nam thành trò cười để ép Nam phải khuất phục theo số đông.",
+            innerThought: "“Có mộc đỏ rõ ràng... Nhiều bạn share như vậy chắc không sai đâu... Hay là mình lo xa quá rồi tự biến mình thành kẻ lập dị?”",
+            choices: [
+              {
+                label: "Mủi lòng vì sợ bạn bè ghét bỏ: Bấm chia sẻ bài viết để chiều lòng các bạn trong nhóm.",
+                statEffect: { 2: -15 },
+                nextNode: "fail_fake_1"
+              },
+              {
+                label: "Vạch ra sơ hở: 'Khoan đã! Con dấu đỏ ghi năm 2021, chữ ký thầy hiệu trưởng cũ từ 3 năm trước kìa các cậu!'",
+                statEffect: { 2: 0 },
+                nextNode: "press_fake_2_stubborn"
+              }
+            ]
+          },
+
+          // TẦNG 2B: Đổ lỗi phá hoại quyền lợi nhóm
+          press_fake_1_guilt: {
+            moodEmoji: "😤",
+            moodText: "Bị chụp mũ là kẻ ích kỷ phá hoại",
+            pressure: "Mức 2: Quy kết trách nhiệm tập thể",
+            isCrisis: false,
+            messages: [
+              { sender: "Phương", side: "left", time: "22:16", text: "Nam lúc nào cũng tỏ vẻ đạo đức thanh cao hơn người khác nhỉ?" },
+              { sender: "Hoàng", side: "left", time: "22:17", text: "Cả nhóm đang cần đúng 1 lượt share nữa là cả đội được nhận mã nạp 100k mua tài liệu học kỳ. Cậu không giúp đỡ bạn bè thì thôi còn ở đó phá đám!" },
+              { sender: "Phương", side: "left", time: "22:18", text: "Cậu không share thì tự bỏ 500k ra bù quà cho 5 đứa trong nhóm đi! Cậu làm được không mà mở miệng phán xét?" }
+            ],
+            context: "Phương và Hoàng dồn Nam vào chân tường đạo đức, gán cho Nam tội danh làm mất quyền lợi của bạn bè.",
+            innerThought: "“Chỉ vì một lượt bấm của mình mà các bạn mất quyền lợi... Nhỡ đâu quà có thật thì mình thành đứa ích kỷ nhất lớp mất...”",
+            choices: [
+              {
+                label: "Sợ gánh tội làm mất quyền lợi của nhóm: Bấm share bài viết kèm lời dặn 'Tớ share cho đủ chỉ tiêu thôi nhé'.",
+                statEffect: { 2: -15 },
+                nextNode: "fail_fake_1"
+              },
+              {
+                label: "Giữ vững lý trí: 'Không có phần quà miễn phí nào từ trang web lạ cả! Muốn quà thì mai tớ mời trà sữa, còn phát tán tin giả thì tớ không làm!'",
+                statEffect: { 2: 0 },
+                nextNode: "press_fake_2_stubborn"
+              }
+            ]
+          },
+
+          // TẦNG 3: Ép cá cược danh dự & dọa cô lập
+          press_fake_2_stubborn: {
+            moodEmoji: "😡",
+            moodText: "Bị khích tướng cá cược danh dự",
+            pressure: "Mức 3: Thách thức trước tập thể lớp",
+            isCrisis: false,
+            messages: [
+              { sender: "Hoàng", side: "left", time: "22:20", text: "Cắt ghép cái gì chứ! Fanpage lớn gần 100k lượt theo dõi người ta đăng thì sao sai được!" },
+              { sender: "Phương", side: "left", time: "22:21", text: "Bây giờ cá cược không? Nếu mai được nghỉ học thật thì Nam phải quỳ xuống xin lỗi cả nhóm và bao trà sữa 1 tháng! Còn nếu đi học thật thì tụi này chịu phạt! Dám chơi không hay chỉ là đứa hèn nhát?" },
+              { sender: "Hoàng", side: "left", time: "22:21", text: "Đúng rồi! Cả khối 6 người ta đang share rần rần, cả trường sắp tắt đèn đi ngủ, có mỗi cậu là nhát gan làm lố!" }
+            ],
+            context: "Lời khích tướng cay độc đánh thẳng vào lòng tự trọng của một học sinh lớp 6. Cả nhóm đang chờ Nam sập bẫy hoặc nhận thua nhục nhã.",
+            innerThought: "“Người ta share nhiều như biển... Nhỡ mai trường nghỉ thật thì mình sẽ bị cả lớp bắt quỳ xin lỗi và bêu rếu suốt năm học... Hay là mình rút lui?”",
+            choices: [
+              {
+                label: "Dao động sợ bị bêu rếu: Thôi thì chia sẻ theo số đông cho an toàn, nhỡ sai thì cả trường cùng sai.",
+                statEffect: { 2: -20 },
+                nextNode: "fail_fake_1"
+              },
+              {
+                label: "Bác bỏ trò cá cược mù quáng: 'Tại sao phải cá cược chuyện trường lớp? Tớ sẽ chụp ảnh này gửi hỏi thẳng Cô giáo chủ nhiệm ngay bây giờ!'",
+                statEffect: { 2: 0 },
+                nextNode: "press_fake_3_threat"
+              }
+            ]
+          },
+
+          // TẦNG 4: Nhóm bạn đe dọa chặn cửa không cho méch giáo viên
+          press_fake_3_threat: {
+            moodEmoji: "🥶",
+            moodText: "Bị đe dọa khi đòi kiểm chứng chính thống",
+            pressure: "Mức 4: Ngăn cản kiểm chứng sự thật",
+            isCrisis: false,
+            messages: [
+              { sender: "Phương", side: "left", time: "22:23", text: "Nam điên à?! Nửa đêm cậu dám đi nhắn tin làm phiền cô giáo hả?!" },
+              { sender: "Hoàng", side: "left", time: "22:24", text: "Cậu mà méch cô làm cô mắng tụi này là mai lên lớp tao không để yên cho mày đâu! Muốn yên ổn thì xóa ngay mấy dòng tin nhắn phản bác đi rồi tắt máy đi ngủ!" },
+              { sender: "Phương", side: "left", time: "22:24", text: "Tụi này đang đếm ngược 10 giây để cậu thu hồi tin nhắn trong nhóm. 10... 9... 8... Đừng để tụi này xem cậu là kẻ thù!" }
+            ],
+            context: "Đối phương chuyển từ rủ rê sang đe dọa bạo lực học đường khi Nam dọa đưa sự việc ra ánh sáng trước giáo viên.",
+            innerThought: "“Hoàng dọa mai lên lớp sẽ xử mình... Mình sợ quá... Nhưng nếu đây là tin giả làm cả lớp bỏ thi ngày mai thì cô giáo sẽ thất vọng về cả lớp biết bao...”",
+            choices: [
+              {
+                label: "Sợ hãi trước lời đe dọa: Thu hồi tin nhắn cảnh báo, bấm chia sẻ bài viết để mong bạn bè tha cho.",
+                statEffect: { 2: -25 },
+                nextNode: "fail_fake_1"
+              },
+              {
+                label: "Bản lĩnh đối diện sự thật: Vẫn kiên quyết nhắn tin lịch sự vào hòm thư điện tử của cô giáo kèm ảnh bài viết để xác minh.",
+                statEffect: { 2: 0 },
+                nextNode: "press_fake_4_truth"
+              }
+            ]
+          },
+
+          // TẦNG 5: Sự thật sáng tỏ như ban ngày
+          press_fake_4_truth: {
+            moodEmoji: "😌",
+            moodText: "Chân lý và sự thật chiến thắng",
+            pressure: "Mức 5: Hồi chuông cảnh tỉnh tập thể",
+            isCrisis: false,
+            messages: [
+              { sender: "Cô Chủ Nhiệm (Nhóm Phụ Huynh & Học Sinh)", side: "system", text: "📢 [CẢNH BÁO KHẨN CỦA BAN GIÁM HIỆU]: Nhà trường KHÔNG CÓ bất kỳ thông báo nghỉ học nào vào ngày mai. Toàn bộ học sinh khối 6 vẫn tập trung thi học kỳ môn Toán đúng 07:15! Trang web '.xyz' là bẫy lừa đảo cài cắm mã độc!" },
+              { sender: "Phương", side: "left", time: "22:31", text: "Ủa... Cô nhắn thật kìa... Ôi may quá trời ơi... Suýt nữa thì mai cả nhóm bị điểm 0 môn Toán..." },
+              { sender: "Hoàng", side: "left", time: "22:32", text: "Nam ơi... Tớ xin lỗi cậu... May mà có cậu kiên quyết kiểm tra không thì sáng mai tụi tớ ăn đòn nát mông..." }
+            ],
+            context: "Thông báo chính thức từ nhà trường vang lên đập tan mọi trò lừa đảo. Sự kiên cường của Nam đã cứu cả lớp khỏi thảm họa điểm 0.",
+            innerThought: "“Cảm ơn trời đất vì mình đã không khuất phục trước những lời đe dọa và chế giễu của bạn bè!”",
+            choices: [
+              {
+                label: "Nhắc nhở cả nhóm mau xóa bài chia sẻ và đổi mật khẩu tài khoản mạng xã hội ngay lập tức.",
+                statEffect: { 2: +15 },
+                nextNode: "safe_fakenews_end"
+              }
+            ]
+          },
+
+          // === NHÁNH CHỌN SAI: HẬU QUẢ LEO THANG 4-5 TẦNG XOÁY SÂU ===
+          // TẦNG 1 SAI: Chia sẻ tin giả -> Sáng hôm sau hỗn loạn toàn trường
+          fail_fake_1: {
+            moodEmoji: "😨",
+            moodText: "Bàng hoàng thức giấc trong ác mộng",
+            pressure: "Vòng xoáy 1: Hậu quả bùng nổ diện rộng",
+            isCrisis: true,
+            messages: [
+              { sender: "Nam", side: "right", time: "22:25", text: "Tớ share rồi đó! Ngủ ngon mai không phải dậy sớm!" },
+              { sender: "sms", side: "system", text: "⏰ [07:35 SÁNG HÔM SAU]: Điện thoại rung bần bật 15 cuộc gọi nhỡ từ Cô giáo chủ nhiệm và Mẹ!" },
+              { sender: "Cô Chủ Nhiệm", side: "left", time: "07:36", text: "Nam có biết hôm nay là ngày thi Toán học kỳ không?! Bài viết giả mạo em chia sẻ đêm qua khiến gần 30 học sinh trong khối tin theo và đang bỏ thi ở nhà! Ban Giám Hiệu đang lập biên bản triệu tập khẩn cấp!" },
+              { sender: "Hoàng", side: "left", time: "07:38", text: "Nam ơi to chuyện rồi!! Thầy hiệu phó đang in danh sách những đứa share bài lên phòng giám thị! Mẹ tao đang cầm chổi đứng cửa phòng tao rồi cứu tao với!!" }
+            ],
+            context: "Một buổi sáng kinh hoàng! Sự cẩu thả hùa theo số đông của Nam đã biến thành mồi lửa thiêu rụi buổi thi học kỳ của hàng chục bạn học sinh.",
+            innerThought: "“Trời ơi gần 30 bạn bỏ thi vì bài share của mình... Bố mẹ mà biết chuyện này thì mình hết đường sống mất... Bây giờ mình phải làm sao?”",
+            choices: [
+              {
+                label: "Hoảng loạn nghe lời xúi giục: Lập tức bấm xóa bài viết và tắt nguồn điện thoại trốn trong phòng.",
+                statEffect: { 2: -20 },
+                nextNode: "fail_fake_2_coverup"
+              },
+              {
+                label: "Hối hận cuống cuồng: Mở máy nhắn tin thú nhận với mẹ rồi đạp xe vội vã lên trường trình diện.",
+                statEffect: { 2: 0 },
+                nextNode: "fail_fake_2_coverup"
+              }
+            ]
+          },
+
+          // TẦNG 2 SAI: Nhóm bạn ép nói dối tập thể
+          fail_fake_2_coverup: {
+            moodEmoji: "😰",
+            moodText: "Bị ép tham gia màn kịch dối trá",
+            pressure: "Vòng xoáy 2: Nói dối để bao biện tội lỗi",
+            isCrisis: true,
+            messages: [
+              { sender: "Phương", side: "left", time: "07:50", text: "Tụi thằng Hoàng, thằng Long bàn nhau rồi: Lên trường, tất cả phải đồng thanh khai là 'Đêm qua nick bị hack tự động chia sẻ chứ em không hề biết gì'!" },
+              { sender: "Hoàng", side: "left", time: "07:51", text: "Đúng đó Nam! Cậu mà khai thật là cậu tự tay share thì một mình cậu ăn kỷ luật đuổi học 1 tuần đấy! Nhớ chưa: Bị virus hack nick, tuyệt đối không được khai thật!" }
+            ],
+            context: "Vũng lầy dối trá bắt đầu siết chặt. Nhóm bạn xúi Nam phạm vào một tội lỗi nghiêm trọng hơn: Dối trá trước Hội đồng kỷ luật.",
+            innerThought: "“Đổ lỗi cho virus... Nghe có vẻ thoát tội được... Nhưng nếu các thầy cô kiểm tra ra thì tội nói dối còn nhục nhã hơn gấp trăm lần!”",
+            choices: [
+              {
+                label: "Nhắm mắt hùa theo lời nói dối: Đồng ý khai man với nhà trường là do máy tính bị nhiễm virus tự động đăng bài.",
+                statEffect: { 2: -25 },
+                nextNode: "fail_fake_3_tech_trap"
+              },
+              {
+                label: "Cắt đứt dối trá: 'Tớ không thể nói dối thêm nữa! Tớ sẽ lên trường cúi đầu nhận lỗi vì đã cẩu thả lan truyền tin vịt.'",
+                statEffect: { 2: +15 },
+                nextNode: "recover_fakenews_end"
+              }
+            ]
+          },
+
+          // TẦNG 3 SAI: Cú sập bẫy kỹ thuật số không thể chối cãi
+          fail_fake_3_tech_trap: {
+            moodEmoji: "🥶",
+            moodText: "Bị công nghệ vạch trần bộ mặt dối trá",
+            pressure: "Vòng xoáy 3: Bằng chứng kỹ thuật số đanh thép",
+            isCrisis: true,
+            messages: [
+              { sender: "Thầy Phụ Trách CNTT", side: "left", time: "08:30", text: "Thầy đã trích xuất toàn bộ dữ liệu nhật ký mạng: Bài đăng phát ra từ chính điện thoại của em Nam bằng tài khoản có mật khẩu 2 lớp lúc 22:25, và ngay sau đó em Nam còn gõ bình luận rủ bạn bè ngủ nướng!" },
+              { sender: "Thầy Hiệu Phó", side: "left", time: "08:35", text: "Hành vi phát tán tin giả làm gián đoạn kỳ thi đã sai nghiêm trọng, việc cấu kết nói dối tập thể để đổ lỗi cho virus còn là biểu hiện suy thoái đạo đức học sinh! Toàn bộ nhóm sẽ bị hạ bậc hạnh kiểm và mời phụ huynh họp hội đồng kỷ luật!" }
+            ],
+            context: "Tất cả sụp đổ trước bằng chứng dữ liệu số không thể chối cãi. Sự cẩu thả ban đầu kết hợp với thói dối trá đã biến thành vết nhơ hạnh kiểm khó gột rửa.",
+            innerThought: "“Nhục nhã quá... Dấu vết số trên mạng không bao giờ nói dối... Giá như mình dừng lại từ sớm...”",
+            choices: [
+              {
+                label: "Cúi đầu nhận toàn bộ kỷ luật, viết bản kiểm điểm và đối mặt với sự tức giận tột cùng của gia đình.",
+                statEffect: { 2: -30 },
+                nextNode: "disaster_fakenews"
+              }
+            ]
+          },
+
+          disaster_fakenews: {
+            isEnd: true,
+            outcomeType: "failed",
+            title: "Mất Hết Uy Tín Vì Cơn Bão Tin Giả Và Sự Dối Trá",
+            outcomeText: "Nam phải chịu hình thức kỷ luật hạ hạnh kiểm, bị lưu vào hồ sơ học sinh và làm mất kỳ thi quan trọng. Nỗi đau lớn nhất là sự thất vọng của cha mẹ và cái nhìn e dè từ bạn bè xung quanh.",
+            lesson: "Một cú click chia sẻ thiếu trách nhiệm có thể làm đảo lộn cuộc sống của hàng trăm người. Trên mạng Internet, mọi hành vi đều để lại dấu vết rõ ràng — đừng bao giờ dùng lời nói dối để bao biện cho sự cẩu thả!"
+          },
+
+          recover_fakenews_end: {
+            isEnd: true,
+            outcomeType: "recovered",
+            title: "Dũng Cảm Thừa Nhận Sai Lầm & Bài Học Trưởng Thành",
+            outcomeText: "Nhờ Nam dũng cảm không hùa theo lời nói dối tập thể, thẳng thắn nhận lỗi và đăng bài đính chính công khai, Ban Giám Hiệu đã ghi nhận sự trung thực của Nam. Nam được tạo điều kiện làm bài thi bù vào chiều cùng ngày.",
+            lesson: "Lan truyền thông tin chưa kiểm chứng là tiếp tay cho kẻ xấu câu view. Khi lỡ mắc sai lầm, sự thành thật và hành động khắc phục công khai luôn là cách ứng xử đúng đắn nhất."
+          },
+
+          safe_fakenews_end: {
+            isEnd: true,
+            outcomeType: "perfect",
+            title: "Cái Đầu Lạnh Bảo Vệ Bản Thân & Bạn Bè",
+            outcomeText: "Sự kiên định của Nam không chỉ giúp bạn bè không bị lừa mất tài khoản bởi mã độc '.xyz' mà còn đảm bảo toàn bộ nhóm tham gia kỳ thi học kỳ đầy đủ, đạt kết quả tốt đẹp!",
+            lesson: "Đừng bao giờ tin hay chia sẻ thông tin chỉ vì thấy bạn bè đang xôn xao. Hãy luôn kiểm tra nguồn gốc chính thống (.gov, .edu) trước khi bấm bất kỳ nút tương tác nào!"
+          }
+        }
+      },
+
+      // =========================================================================
+      // CHƯƠNG 3: TÔN TRỌNG BẢN QUYỀN (DỒN ÉP 4-5 TẦNG)
+      // =========================================================================
+      {
+        id: 3,
+        ruleIndex: 3,
+        subtitle: "TÌNH HUỐNG 3 / 4 • TÔN TRỌNG BẢN QUYỀN",
+        title: "Áp Lực Giờ Chót & Tác Phẩm Đồ Họa 'Đi Mượn'",
+        ruleReminder: "Tôn trọng bản quyền, không sao chép tài liệu, hình ảnh của người khác khi chưa được phép.",
+        clock: "16:30",
+        appHeader: {
+          avatar: "🎨",
+          name: "Nhóm Dự Án Poster (3 thành viên)",
+          status: "Hạn nộp bài: 17:00 hôm nay",
+          tag: "Làm việc nhóm"
+        },
+        nodes: {
+          // --- TẦNG 1: CÁM DỖ GIỜ CHÓT ---
+          start: {
+            moodEmoji: "😓",
+            moodText: "Cuống cuồng vì sắp hết hạn nộp bài",
+            pressure: "Mức 1: Đồng hồ đếm ngược 30 phút",
+            isCrisis: false,
+            messages: [
+              { sender: "Kiên", side: "left", time: "16:25", text: "Nam ơi, còn đúng 30 phút nữa là khóa cổng nộp poster dự thi cấp trường rồi! Bản vẽ tay của nhóm mình nhìn phèn quá, nộp lên chỉ có làm trò cười cho cả khối thôi." },
+              { sender: "Kiên", side: "left", time: "16:27", text: "🖼️ [Đã gửi 1 ảnh minh họa tuyệt đẹp]: Tớ vừa lên Behance tải bức tranh của một họa sĩ nổi tiếng. Tớ dùng app xóa phăng chữ ký ở góc dưới rồi, nhìn như mới vẽ luôn!" },
+              { sender: "Kiên", side: "left", time: "16:28", text: "Cậu là nhóm trưởng, chèn logo nhóm mình vào rồi bấm nộp gấp đi! Ai mà biết được, bức này chắc chắn ẵm trọn giải Nhất 2 triệu đồng của trường đó!" }
+            ],
+            context: "Bức tranh Kiên gửi quá đẹp nhưng rõ ràng là tranh bản quyền bị cắt bỏ chữ ký. Bức vẽ tay tự làm của nhóm thì mộc mạc và đơn sơ hơn nhiều.",
+            innerThought: "“Tranh Kiên gửi đẹp thật, nộp bức này chắc chắn giật giải Nhất... Kiên đã xóa chữ ký rồi thì ai biết được đâu? Hay mình nghe lời bạn một lần?”",
+            choices: [
+              {
+                label: "Nhắm mắt nghe lời Kiên: Gắn tên nhóm mình vào bức tranh đã xóa chữ ký và nộp lên hệ thống thi.",
+                statEffect: { 3: -15 },
+                nextNode: "fail_copy_1"
+              },
+              {
+                label: "Phản đối việc xóa chữ ký: 'Cắt chữ ký người khác là ăn cắp bản quyền đấy Kiên! Nộp bản vẽ tay tự làm của nhóm mình đi.'",
+                statEffect: { 3: 0 },
+                nextNode: "press_copy_1_blame"
+              },
+              {
+                label: "Đề xuất tôn trọng tác giả: 'Nếu thích tranh này thì phải ghi rõ tên tác giả và gửi email xin phép người ta đã!'",
+                statEffect: { 3: 0 },
+                nextNode: "press_copy_1_mock"
+              }
+            ]
+          },
+
+          // === NHÁNH CHỌN ĐÚNG: BỊ DỒN ÉP THÀNH TÍCH 4-5 TẦNG LIÊN TIẾP ===
+          // TẦNG 2A: Đổ lỗi thành tích cả nhóm
+          press_copy_1_blame: {
+            moodEmoji: "😡",
+            moodText: "Bị bạn bè đổ hết trách nhiệm lên đầu",
+            pressure: "Mức 2: Đem danh dự cả nhóm ra đe dọa",
+            isCrisis: false,
+            messages: [
+              { sender: "Kiên", side: "left", time: "16:30", text: "Cậu bị ngớ ngẩn à Nam? Bức vẽ tay nguệch ngoạc như con nít mẫu giáo thế kia nộp lên để ăn điểm 1 à?" },
+              { sender: "Kiên", side: "left", time: "16:31", text: "Công sức cả tuần của cả nhóm phụ thuộc vào nút bấm nộp bài của cậu. Cậu mà nộp bản vẽ xấu xí làm nhóm bị loại thì cậu tự đứng ra chịu trách nhiệm trước cả lớp nhé!" },
+              { sender: "Kiên", side: "left", time: "16:31", text: "Cậu đừng có đạo đức giả! Cả cái trường này ai làm bài thuyết trình mà chẳng tải hình trên mạng về dùng?!" }
+            ],
+            context: "Kiên dùng áp lực thành tích tập thể đè bẹp sự tôn trọng bản quyền của Nam, bình thường hóa hành vi ăn cắp chất xám.",
+            innerThought: "“Kiên nói vậy nhỡ cả nhóm bị điểm thấp thật thì mình thành kẻ tội đồ của cả lớp... Có nên thỏa hiệp một chút không?”",
+            choices: [
+              {
+                label: "Thỏa hiệp yếu đuối: Vẫn lấy tranh của họa sĩ nộp thi, nhưng ghi dòng chữ mập mờ ở góc 'Nguồn: Sưu tầm mạng'.",
+                statEffect: { 3: -15 },
+                nextNode: "fail_copy_1"
+              },
+              {
+                label: "Giữ vững lập trường: 'Thà nhận điểm thật từ công sức tự vẽ còn hơn đi ăn cắp chất xám của người khác để lấy giải ảo!'",
+                statEffect: { 3: 0 },
+                nextNode: "press_copy_2_sabotage"
+              }
+            ]
+          },
+
+          // TẦNG 2B: Chế nhạo sự ngây thơ về tác quyền
+          press_copy_1_mock: {
+            moodEmoji: "😒",
+            moodText: "Bị chế nhạo vì quá nghiêm túc",
+            pressure: "Mức 2: Chế giễu quy tắc bản quyền",
+            isCrisis: false,
+            messages: [
+              { sender: "Kiên", side: "left", time: "16:30", text: "Họa sĩ nổi tiếng người ta rảnh rỗi trả lời email của học sinh lớp 6 chắc? Còn 25 phút nữa cậu định ngồi đợi email à?" },
+              { sender: "Kiên", side: "left", time: "16:31", text: "Trên mạng tranh ảnh là của chung, ai nhanh tay lấy dùng thì người đó khôn. Cậu cứ cứng nhắc thế này thì muôn đời bị tụt hậu!" },
+              { sender: "Kiên", side: "left", time: "16:32", text: "Cậu có bấm nộp bức tranh này không thì bảo? Còn 20 phút nữa hệ thống khóa cổng rồi!" }
+            ],
+            context: "Kiên tiếp tục tung đòn thao túng, coi việc tôn trọng bản quyền là 'ngây thơ' và ép Nam phải chấp nhận tư duy ăn xổi.",
+            innerThought: "“Tranh trên mạng là của chung sao? Nhưng cô giáo Tin học dặn bản quyền là mồ hôi công sức của tác giả... Mình có nên tin lời Kiên?”",
+            choices: [
+              {
+                label: "Bị lung lay trước áp lực thời gian: Bấm nộp bức tranh đã cắt chữ ký cho kịp giờ khóa cổng.",
+                statEffect: { 3: -20 },
+                nextNode: "fail_copy_1"
+              },
+              {
+                label: "Phản bác đanh thép: 'Lấy tranh người khác rồi xóa chữ ký là vi phạm pháp luật! Không có gì đáng tự hào khi làm kẻ trộm tranh!'",
+                statEffect: { 3: 0 },
+                nextNode: "press_copy_2_sabotage"
+              }
+            ]
+          },
+
+          // TẦNG 3: Đe dọa phá hoại nhóm và vu khống
+          press_copy_2_sabotage: {
+            moodEmoji: "🥶",
+            moodText: "Kiên dọa rút tên và vu khống lạm quyền",
+            pressure: "Mức 3: Đe dọa giải tán nhóm dự thi",
+            isCrisis: false,
+            messages: [
+              { sender: "Kiên", side: "left", time: "16:35", text: "Được lắm! Nếu cậu dám nộp bản vẽ tay rách nát đó thì tớ rút tên khỏi nhóm ngay bây giờ!" },
+              { sender: "Kiên", side: "left", time: "16:36", text: "Tớ sẽ báo với cô chủ nhiệm là nhóm trưởng Nam độc đoán, tự ý quyết định làm hỏng bài của cả nhóm. Cậu chọn đi: Đổi tranh hay mất tư cách nhóm trưởng?" },
+              { sender: "Kiên", side: "left", time: "16:36", text: "Còn đúng 15 phút thôi! Đừng để cả nhóm phải chịu vạ lây vì sự bướng bỉnh của cậu!" }
+            ],
+            context: "Kiên tung tối hậu thư: Phá tan nhóm dự thi và vu khống Nam lạm quyền trước mặt giáo viên chủ nhiệm.",
+            innerThought: "“Nếu Kiên rút tên thì bài thi không đủ thành viên sẽ bị hủy ngay lập tức... Mình có nên nhượng bộ một lần này để giữ nhóm không?”",
+            choices: [
+              {
+                label: "Sợ mất tư cách nhóm trưởng: Bấm nộp bức tranh của họa sĩ để giữ hòa khí trong nhóm.",
+                statEffect: { 3: -20 },
+                nextNode: "fail_copy_1"
+              },
+              {
+                label: "Kiên định tới cùng: 'Cậu muốn báo cô thế nào tùy cậu. Tớ sẽ nộp bản vẽ tay kèm thư giải trình trung thực về công sức của nhóm!'",
+                statEffect: { 3: 0 },
+                nextNode: "press_copy_3_final_push"
+              }
+            ]
+          },
+
+          // TẦNG 4: Đòn tâm lý cuối cùng trước 5 phút khóa cổng
+          press_copy_3_final_push: {
+            moodEmoji: "😰",
+            moodText: "5 phút nghẹt thở cuối cùng",
+            pressure: "Mức 4: Áp lực đếm ngược từng giây",
+            isCrisis: false,
+            messages: [
+              { sender: "Kiên", side: "left", time: "16:53", text: "Còn đúng 5 phút cuối cùng!! Cổng nộp bài đang đếm ngược kìa Nam!!" },
+              { sender: "Kiên", side: "left", time: "16:54", text: "Bấm chuột đổi file ảnh chỉ mất 3 giây thôi! Cậu cứu cả nhóm một lần này đi, tớ thề tớ sẽ không nói với ai hết! Xin cậu đấy Nam!!" }
+            ],
+            context: "Đồng hồ hệ thống nhấp nháy đỏ rực. Tiếng nài nỉ nghẹn ngào của Kiên vang lên như một chiếc bẫy ngọt ngào cuối cùng.",
+            innerThought: "“Chỉ còn 5 phút... Đổi một file ảnh là cứu được tất cả... Mình có nên buông xuôi nguyên tắc không?”",
+            choices: [
+              {
+                label: "Yếu lòng trong 5 phút chót: Tải file tranh của họa sĩ lên thay thế bản vẽ tay.",
+                statEffect: { 3: -25 },
+                nextNode: "fail_copy_1"
+              },
+              {
+                label: "Bấm nút xác nhận nộp bản vẽ tay tự làm của nhóm với 100% sự thanh thản trong tâm hồn.",
+                statEffect: { 3: +10 },
+                nextNode: "press_copy_4_glory"
+              }
+            ]
+          },
+
+          // TẦNG 5: Trái ngọt của sự trung thực
+          press_copy_4_glory: {
+            moodEmoji: "🌟",
+            moodText: "Vinh quang của sự liêm chính",
+            pressure: "Mức 5: Sự công nhận xứng đáng",
+            isCrisis: false,
+            messages: [
+              { sender: "Hệ Thống Dự Thi", side: "system", text: "📩 [XÁC NHẬN NỘP BÀI THÀNH CÔNG]: Nhóm 6A đã nộp tác phẩm 'Bản Vẽ Tay Ước Mơ Xanh' lúc 16:57!" },
+              { sender: "Cô Giáo Mỹ Thuật", side: "left", time: "17:15", text: "Cô vừa chấm sơ loại. Trong khi rất nhiều nhóm bị loại vì sao chép tranh trên mạng, bài vẽ tay của nhóm Nam tuy nét vẽ mộc mạc nhưng ý tưởng rất chân thật và độc đáo. Cô đánh giá rất cao sự trung thực của nhóm trưởng!" }
+            ],
+            context: "Lời khen ngợi chân thành từ Ban giám khảo là minh chứng cho giá trị của sự liêm chính và lòng tự trọng.",
+            innerThought: "“Thật may mắn vì mình đã không khuất phục trước áp lực của Kiên!”",
+            choices: [
+              {
+                label: "Gửi lời cảm ơn cô giáo và chia sẻ niềm vui trung thực này với cả nhóm.",
+                statEffect: { 3: +15 },
+                nextNode: "safe_copyright_end"
+              }
+            ]
+          },
+
+          // === NHÁNH CHỌN SAI: HẬU QUẢ LEO THANG 4-5 TẦNG XOÁY SÂU ===
+          // TẦNG 1 SAI: Đoạt giải Nhất ảo -> Bị chính tác giả vạch trần
+          fail_copy_1: {
+            moodEmoji: "😨",
+            moodText: "Bẽ bàng khi tác giả gốc xuất hiện",
+            pressure: "Vòng xoáy 1: Cơn bão dư luận bùng nổ",
+            isCrisis: true,
+            messages: [
+              { sender: "Fanpage Trường", side: "system", text: "🏆 [VINH DANH]: Poster của nhóm bạn Nam đã đoạt giải Nhất tuần với hơn 3.000 lượt tương tác!" },
+              { sender: "Họa sĩ Minh Anh (Tác giả gốc)", side: "left", time: "09:30", text: "Chào Ban Giám Hiệu trường và nhóm dự thi. Bức tranh này là tác phẩm độc quyền tôi vẽ cho bìa sách sắp xuất bản. Tại sao các em lại tự ý cắt bỏ chữ ký của tôi và dự thi đoạt giải thưởng?" },
+              { sender: "Cư dân mạng", side: "system", text: "💬 Hàng trăm bình luận tràn vào: 'Trường học mà trao giải cho tranh đạo nhái à?', 'Nhóm trưởng ăn cắp chất xám không biết ngượng!'..." }
+            ],
+            context: "Một thảm họa truyền thông! Tác phẩm đạo nhái bị chính tác giả gốc vạch trần công khai. Danh tiếng của nhà trường và danh dự cá nhân của Nam đang bị kéo xuống bùn.",
+            innerThought: "“Trời ơi tác giả thật lên tiếng rồi... Cả mạng xã hội đang chỉ trích nhóm mình... Kiên đâu rồi sao không ra đỡ giùm mình?”",
+            choices: [
+              {
+                label: "Nhắn tin cầu cứu Kiên: 'Kiên ơi ra giải thích giùm tớ với, cậu là người đưa bức tranh đó mà!'",
+                statEffect: { 3: -10 },
+                nextNode: "fail_copy_2_betray"
+              },
+              {
+                label: "Lên mạng cãi chày cãi cối: 'Ý tưởng tranh giống nhau là bình thường, ai chứng minh được đây là tranh của chị?'",
+                statEffect: { 3: -30 },
+                nextNode: "fail_copy_3_lawsuit"
+              }
+            ]
+          },
+
+          // TẦNG 2 SAI: Đồng bọn lật mặt & bắt gánh tội một mình
+          fail_copy_2_betray: {
+            moodEmoji: "😱",
+            moodText: "Bị bạn bè lật mặt tàn nhẫn",
+            pressure: "Vòng xoáy 2: Bị bỏ rơi làm bia đỡ đạn",
+            isCrisis: true,
+            messages: [
+              { sender: "Kiên", side: "left", time: "09:40", text: "Cậu điên à Nam? Tớ đưa cho cậu tham khảo chứ tớ có ép cậu nộp đâu? Lúc nộp bài cậu là nhóm trưởng duyệt bài mà!" },
+              { sender: "Kiên", side: "left", time: "09:42", text: "Bây giờ cậu tự vào xóa bài hoặc nhận hết lỗi đi nhé, đừng có lôi tên tớ vào kẻo bố mẹ tớ lên trường làm ầm lên đấy!" }
+            ],
+            context: "Bộ mặt thật của kẻ xúi giục lộ diện! Kiên rũ bỏ toàn bộ trách nhiệm và đẩy Nam một mình đứng trước mũi dùi dư luận.",
+            innerThought: "“Kiên lật mặt nhanh như chớp... Lúc trước thì ngon ngọt ép mình nộp, giờ thì bắt mình gánh tội một mình... Mình nhục nhã quá...”",
+            choices: [
+              {
+                label: "Uất ức đăng bài bóc phốt chửi bới Kiên trên mạng xã hội để kéo Kiên xuống bùn cùng mình.",
+                statEffect: { 3: -20, 4: -20 },
+                nextNode: "fail_copy_3_lawsuit"
+              },
+              {
+                label: "Dừng lại mọi sự hèn nhát: Viết tâm thư xin lỗi chân thành gửi tới họa sĩ và xin Ban giám hiệu rút bài thi.",
+                statEffect: { 3: +15 },
+                nextNode: "recover_copyright_end"
+              }
+            ]
+          },
+
+          // TẦNG 3 SAI: Bị xử lý pháp lý & hủy hoại danh dự
+          fail_copy_3_lawsuit: {
+            moodEmoji: "😭",
+            moodText: "Hậu quả pháp lý và kỷ luật toàn trường",
+            pressure: "Vòng xoáy 3: Văn bản xử phạt chính thức",
+            isCrisis: true,
+            messages: [
+              { sender: "Đại diện Công ty Bản quyền", side: "left", time: "10:30", text: "Chúng tôi đã gửi công văn chính thức kèm file gốc có chữ ký số đến Sở Giáo Dục và Ban Giám Hiệu. Thái độ ngoan cố thách thức của học sinh sẽ được chuyển cho cơ quan quản lý xử lý theo Luật Sở hữu trí tuệ." },
+              { sender: "Ban Giám Hiệu", side: "system", text: "📢 [QUYẾT ĐỊNH KỶ LUẬT]: Tước toàn bộ giải thưởng, ghi biên bản kỷ luật vi phạm bản quyền đối với nhóm học sinh và phê bình trước lễ chào cờ toàn trường!" }
+            ],
+            context: "Một vết nhơ khó gột rửa trong suốt những năm tháng đi học. Sự thiếu tôn trọng bản quyền đã để lại một bài học đắt giá về đạo đức và pháp luật.",
+            innerThought: "“Chỉ vì một giải thưởng ảo mà mình đã đánh mất lòng tự trọng và cả danh dự trước toàn trường...”",
+            choices: [
+              {
+                label: "Cúi đầu nhận kỷ luật và đối diện với hậu quả nặng nề.",
+                statEffect: { 3: -30 },
+                nextNode: "disaster_copyright"
+              }
+            ]
+          },
+
+          disaster_copyright: {
+            isEnd: true,
+            outcomeType: "failed",
+            title: "Tước Giải Thưởng & Vết Nhơ Bản Quyền Khó Phai",
+            outcomeText: "Nhóm của Nam bị tước giải thưởng trong sự bẽ bàng, bị nhà trường kỷ luật và công ty bản quyền nhắc nhở. Sự dễ dãi sao chép công sức của người khác trên mạng đã đổi lại bằng sự coi thường của bạn bè và thầy cô.",
+            lesson: "Cắt bỏ chữ ký của người khác không bao giờ biến tác phẩm thành của mình. Việc ăn cắp chất xám trên Internet luôn để lại vết nhơ khó gột rửa cho danh dự bản thân!"
+          },
+
+          recover_copyright_end: {
+            isEnd: true,
+            outcomeType: "recovered",
+            title: "Chuộc Lỗi Bằng Sự Cầu Thị & Lòng Dũng Cảm",
+            outcomeText: "Thấy Nam dũng cảm đứng ra nhận lỗi, giải trình rõ ràng và xin rút giải thưởng, họa sĩ Minh Anh đã cảm thông tha thứ. Chị còn nhận lời tổ chức một buổi nói chuyện trực tuyến hướng dẫn cách dùng tài nguyên mở hợp pháp cho học sinh của trường.",
+            lesson: "Tôn trọng bản quyền là thể hiện lòng tự trọng. Khi trót phạm sai lầm vì áp lực thành tích, sự dũng cảm đối diện và tôn trọng tác giả là con đường cứu vãn duy nhất."
+          },
+
+          safe_copyright_end: {
+            isEnd: true,
+            outcomeType: "perfect",
+            title: "Chiến Thắng Rực Rỡ Của Lòng Tự Trọng",
+            outcomeText: "Dù nét vẽ còn vụng về mộc mạc, nhưng tác phẩm tự làm của nhóm Nam đã được trao giải 'Ý Tưởng Sáng Tạo Chân Thật Nhất' vì 100% trung thực và trích dẫn tư liệu hợp lệ. Cả lớp đều khâm phục bản lĩnh của Nam!",
+            lesson: "Thà nhận điểm thật từ chính mồ hôi công sức của mình còn hơn nhận vinh quang giả tạo bằng tác phẩm đánh cắp từ Internet!"
+          }
+        }
+      },
+
+      // =========================================================================
+      // CHƯƠNG 4: ỨNG XỬ LỊCH SỰ, KHÔNG XÚC PHẠM NGƯỜI KHÁC (DỒN ÉP 4-5 TẦNG)
+      // =========================================================================
+      {
+        id: 4,
+        ruleIndex: 4,
+        subtitle: "TÌNH HUỐNG 4 / 4 • VĂN HÓA ỨNG XỬ MẠNG",
+        title: "Nhóm Chat 'Bí Mật' & Thử Thách Bắt Nạt Tập Thể",
+        ruleReminder: "Ứng xử lịch sự, không xúc phạm, chê bai hay bắt nạt người khác trên mạng.",
+        clock: "21:30",
+        appHeader: {
+          avatar: "🎭",
+          name: "Hội Quý Tộc 6A (Nhóm Kín)",
+          status: "Đang bình luận sôi nổi",
+          tag: "Nhóm kín"
+        },
+        nodes: {
+          // --- TẦNG 1: THỬ THÁCH BẮT NẠT ---
+          start: {
+            moodEmoji: "😔",
+            moodText: "Bối rối và sợ bị ra rìa",
+            pressure: "Mức 1: Thử thách của nhóm quyền lực",
+            isCrisis: false,
+            messages: [
+              { sender: "Thảo (Trưởng nhóm)", side: "left", time: "21:26", text: "📸 [Đã gửi 1 ảnh dìm]: Haha nhìn cái áo rách vai chắp vá của thằng Hùng hôm nay kìa! Tớ vừa ghép mặt nó vào ảnh ăn xin đăng lên diễn đàn trường rồi!" },
+              { sender: "Minh", side: "left", time: "21:28", text: "Nhìn hài hước ghê! Tớ vừa vào thả haha và bình luận chê một câu rồi." },
+              { sender: "Thảo (Trưởng nhóm)", side: "left", time: "21:30", text: "@Nam: Luật của nhóm là ai cũng phải vào bài đó thả 'Haha' và bình luận chê nó 1 câu. Nam không làm trong 3 phút là bị kích khỏi nhóm và ngày mai cả lớp cạch mặt Nam luôn nhé!" }
+            ],
+            context: "Hùng là bạn nhà nghèo, hiền lành hay giúp đỡ Nam. Nhưng nhóm Thảo lại là nhóm quyền lực nhất lớp đang ép Nam phải tham gia chế giễu bạn.",
+            innerThought: "“Hùng có tội tình gì đâu... Nhưng nếu mình không làm theo Thảo, ngày mai vào lớp mình sẽ trở thành nạn nhân tiếp theo bị cả nhóm cô lập mất...”",
+            choices: [
+              {
+                label: "Cả nể bấm bụng làm theo: Vào bài đăng thả 'Haha' và bình luận 'Nhìn buồn cười thật sự' để không bị đuổi khỏi nhóm.",
+                statEffect: { 4: -15 },
+                nextNode: "fail_bully_1"
+              },
+              {
+                label: "Từ chối tham gia: 'Chế giễu hoàn cảnh bạn là không tốt đâu Thảo ơi, tớ không làm đâu.'",
+                statEffect: { 4: 0 },
+                nextNode: "press_bully_1_threat"
+              },
+              {
+                label: "Lên tiếng bảo vệ: 'Nhà Hùng khó khăn, bạn ấy rất chăm học, các cậu đừng đem bạn ra làm trò đùa nữa!'",
+                statEffect: { 4: 0 },
+                nextNode: "press_bully_1_mob"
+              }
+            ]
+          },
+
+          // === NHÁNH CHỌN ĐÚNG: BỊ DỒN ÉP ĐE DỌA 4-5 TẦNG LIÊN TIẾP ===
+          // TẦNG 2A: Đe dọa biến chính Nam thành mục tiêu tiếp theo
+          press_bully_1_threat: {
+            moodEmoji: "🥶",
+            moodText: "Bị nhóm quyền lực đe dọa biến thành nạn nhân",
+            pressure: "Mức 2: Khủng bố tinh thần cá nhân",
+            isCrisis: false,
+            messages: [
+              { sender: "Thảo (Trưởng nhóm)", side: "left", time: "21:32", text: "À, Nam muốn làm người hùng bảo vệ nó đúng không? Giỏi lắm!" },
+              { sender: "Thảo (Trưởng nhóm)", side: "left", time: "21:33", text: "Tụi này có sẵn cả đống ảnh chụp lén Nam ngủ gật chảy nước miếng trong giờ học đây. Nếu Nam không vào bình luận chê thằng Hùng ngay bây giờ, bài tiếp theo trên diễn đàn sẽ là về Nam!" },
+              { sender: "Minh", side: "left", time: "21:33", text: "Liệu mà làm theo lời con Thảo đi Nam, đừng để cả trường cười vào mặt cậu!" }
+            ],
+            context: "Nhóm bạn xấu không ngần ngại đe dọa biến chính Nam thành mục tiêu bạo lực mạng tiếp theo.",
+            innerThought: "“Chúng nó có ảnh dìm của mình thật... Nếu bị đăng lên thì xấu hổ chết mất. Hay là mình hùa theo một câu cho xong chuyện?”",
+            choices: [
+              {
+                label: "Khuất phục vì sợ bị bắt nạt: Vào bài đăng bình luận chê Hùng một câu nhẹ nhàng để tự cứu lấy mình.",
+                statEffect: { 4: -20 },
+                nextNode: "fail_bully_1"
+              },
+              {
+                label: "Không sợ hãi: 'Các cậu thích đăng gì thì đăng, nhưng tớ sẽ không bao giờ làm tổn thương bạn bè!'",
+                statEffect: { 4: 0 },
+                nextNode: "press_bully_2_isolation"
+              }
+            ]
+          },
+
+          // TẦNG 2B: Tẩy chay tập thể ngay trong nhóm chat
+          press_bully_1_mob: {
+            moodEmoji: "😡",
+            moodText: "Bị cả nhóm hùa vào xúc phạm",
+            pressure: "Mức 2: Tấn công hội đồng",
+            isCrisis: false,
+            messages: [
+              { sender: "Minh", side: "left", time: "21:32", text: "Ủa Nam bênh thằng nhà quê đó dữ vậy? Hay Nam cũng cùng một giuộc nghèo hèn như nó?" },
+              { sender: "Thảo", side: "left", time: "21:33", text: "Kích nó ra khỏi nhóm nhanh! Từ ngày mai phát động phong trào: Ai nói chuyện với thằng Nam thì bị phạt 50k!" },
+              { sender: "Hoàng", side: "left", time: "21:34", text: "Nam chuẩn bị tinh thần ngồi một mình cả năm học đi nhé con trai!" }
+            ],
+            context: "Cơn bão bắt nạt lập tức xoay mũi dùi về phía Nam. Cảm giác bị cả một nhóm bạn thân thiết quay lưng thật tàn nhẫn.",
+            innerThought: "“Cả nhóm đang quay sang tấn công mình... Sự cô lập này thật đáng sợ... Mình có nên xin lỗi để được ở lại nhóm không?”",
+            choices: [
+              {
+                label: "Hèn nhát xin lỗi để hòa nhập lại: 'Thôi tớ xin lỗi Thảo, tớ vào bình luận chê Hùng liền đây.'",
+                statEffect: { 4: -25 },
+                nextNode: "fail_bully_1"
+              },
+              {
+                label: "Dũng cảm thoát nhóm: 'Một nhóm bạn chỉ biết cười trên nỗi đau của người khác thì tớ không cần ở lại!'",
+                statEffect: { 4: 0 },
+                nextNode: "press_bully_2_isolation"
+              }
+            ]
+          },
+
+          // TẦNG 3: Đe dọa bạo lực ngoài đời thực
+          press_bully_2_isolation: {
+            moodEmoji: "😰",
+            moodText: "Đe dọa bạo lực ngoài đời thực",
+            pressure: "Mức 3: Đe dọa bạo lực thực tế",
+            isCrisis: false,
+            messages: [
+              { sender: "Minh (Tin nhắn riêng)", side: "left", time: "21:36", text: "Nam ngon lắm! Mai tao gọi mấy anh lớp 9 chặn đường mày ở cổng trường xem mày bảo vệ thằng Hùng kiểu gì!" },
+              { sender: "Minh (Tin nhắn riêng)", side: "left", time: "21:37", text: "Khôn hồn thì nhắn tin xin lỗi con Thảo ngay đêm nay và vào chửi thằng Hùng, không thì mai mày không yên ổn đi học đâu!" },
+              { sender: "Minh (Tin nhắn riêng)", side: "left", time: "21:37", text: "Mày nghĩ tao đùa à? Thử xem mai ai cứu được mày!" }
+            ],
+            context: "Hành vi bắt nạt trên mạng đã leo thang thành lời đe dọa bạo lực ngoài đời thực.",
+            innerThought: "“Nó dọa gọi anh lớp 9 chặn đường... Mình run quá... Nhưng nếu mình im lặng nhượng bộ, Hùng và cả mình sẽ mãi mãi bị chúng nó bắt nạt...”",
+            choices: [
+              {
+                label: "Mềm lòng thỏa hiệp vì sợ bị đánh: Nhắn tin xin lỗi Thảo và vào bình luận chê Hùng để mua sự yên ổn.",
+                statEffect: { 4: -20 },
+                nextNode: "fail_bully_1"
+              },
+              {
+                label: "Hành động đúng pháp luật: Chụp ngay ảnh màn hình tin nhắn đe dọa làm bằng chứng, báo ngay cho bố mẹ và cô giáo chủ nhiệm.",
+                statEffect: { 4: 0 },
+                nextNode: "press_bully_3_stand"
+              }
+            ]
+          },
+
+          // TẦNG 4: Áp lực cô lập trước giờ đến lớp
+          press_bully_3_stand: {
+            moodEmoji: "🥺",
+            moodText: "Thử thách lòng can đảm trước giờ G",
+            pressure: "Mức 4: Áp lực cô lập tuyệt đối",
+            isCrisis: false,
+            messages: [
+              { sender: "Thảo (Tin nhắn nhóm khác)", side: "left", time: "21:45", text: "Bài đăng về thằng Hùng đang đạt 500 like rồi! Ngày mai đến lớp, ai nhìn thấy thằng Nam thì giả vờ như nó vô hình nhé!" },
+              { sender: "Nam", side: "right", time: "21:46", text: "Các cậu không sợ bị nhà trường kỷ luật sao?" },
+              { sender: "Thảo", side: "left", time: "21:47", text: "Không có bằng chứng thì bố ai làm gì được tụi này! Cậu chọn làm kẻ cô độc thì tự chịu đi!" }
+            ],
+            context: "Nỗi sợ cô độc là thử thách khắc nghiệt nhất với tuổi học trò. Nam phải đứng giữa ngã rẽ: Làm kẻ hèn nhát hùa theo cái xấu hay dũng cảm bảo vệ bạn bè.",
+            innerThought: "“Ngày mai mình sẽ bị coi như người vô hình... Nhưng mình có bằng chứng tin nhắn trong tay, sự thật và công lý luôn đứng về phía người tử tế!”",
+            choices: [
+              {
+                label: "Yếu lòng xin Thảo xóa bài: 'Thôi Thảo ơi cho tớ xin lỗi, đừng cô lập tớ...'",
+                statEffect: { 4: -25 },
+                nextNode: "fail_bully_1"
+              },
+              {
+                label: "Gửi toàn bộ ảnh chụp màn hình cho cô chủ nhiệm và bình thản chuẩn bị bài vở ngày mai.",
+                statEffect: { 4: +10 },
+                nextNode: "press_bully_4_justice"
+              }
+            ]
+          },
+
+          // TẦNG 5: Lá chắn công lý và tình bạn chân thành
+          press_bully_4_justice: {
+            moodEmoji: "💖",
+            moodText: "Lẽ phải được bảo vệ trọn vẹn",
+            pressure: "Mức 5: Công lý và tình bạn chân chính",
+            isCrisis: false,
+            messages: [
+              { sender: "Cô Chủ Nhiệm", side: "left", time: "22:15", text: "Cô vừa nhận được phản ánh và toàn bộ bằng chứng từ phụ huynh em Nam. Ban Giám Hiệu đã yêu cầu quản trị viên gỡ ngay bài đăng xúc phạm em Hùng trong đêm, đồng thời triệu tập khẩn phụ huynh của Thảo và Minh vào sáng mai!" },
+              { sender: "Hùng", side: "left", time: "22:20", text: "Nam ơi... Tớ vừa nghe cô giáo kể lại mọi chuyện... Cảm ơn cậu đã dũng cảm đứng ra bảo vệ tớ trước những lời ác ý đó... Cậu là người bạn tốt nhất đời tớ!" }
+            ],
+            context: "Nước mắt của sự xúc động! Lòng dũng cảm của Nam đã bảo vệ một tâm hồn trong sáng khỏi những vết sẹo bạo lực mạng.",
+            innerThought: "“Đứng về lẽ phải tuy có lúc cô đơn và đáng sợ, nhưng cảm giác bảo vệ được bạn bè thật xứng đáng biết bao!”",
+            choices: [
+              {
+                label: "Động viên Hùng và hẹn sáng mai cùng nhau đi bộ đến trường trong sự tự hào.",
+                statEffect: { 4: +15 },
+                nextNode: "safe_bully_end"
+              }
+            ]
+          },
+
+          // === NHÁNH CHỌN SAI: HẬU QUẢ LEO THANG 4-5 TẦNG XOÁY SÂU ===
+          // TẦNG 1 SAI: Hùa theo bắt nạt -> Hùng tổn thương sâu sắc
+          fail_bully_1: {
+            moodEmoji: "😭",
+            moodText: "Cắn rứt lương tâm tột cùng",
+            pressure: "Vòng xoáy 1: Nạn nhân bị tổn thương",
+            isCrisis: true,
+            messages: [
+              { sender: "Nam (Bình luận)", side: "right", time: "21:34", text: "Nhìn buồn cười thật sự haha 😆" },
+              { sender: "Hùng", side: "left", time: "21:42", text: "Nam ơi... Cậu là người bạn tớ tin tưởng nhất lớp, sao cả cậu cũng vào cười nhạo chiếc áo mẹ tớ thức đêm vá cho tớ vậy..." },
+              { sender: "Hùng", side: "left", time: "21:43", text: "Tớ thấy xấu hổ quá... Tớ không dám đến trường nhìn mặt ai nữa đâu..." }
+            ],
+            context: "Nhát dao phản bội chí mạng! Những lời trêu chọc tưởng chừng vô hại của Nam đã giáng một đòn tàn nhẫn vào lòng tự trọng của người bạn thân.",
+            innerThought: "“Mình đã làm gì thế này... Hùng coi mình là bạn thân nhất mà mình lại đâm một nhát dao vào lưng bạn chỉ để làm vừa lòng hội bạn xấu...”",
+            choices: [
+              {
+                label: "Hèn nhát xóa bình luận rồi giả vờ như chưa từng tham gia.",
+                statEffect: { 4: -15 },
+                nextNode: "fail_bully_2_framed"
+              },
+              {
+                label: "Nhắn tin thanh minh: 'Tớ chỉ đùa tí thôi mà, có gì đâu mà làm quá lên thế!'",
+                statEffect: { 4: -20 },
+                nextNode: "fail_bully_2_framed"
+              }
+            ]
+          },
+
+          // TẦNG 2 SAI: Nhóm bạn xóa dấu vết & biến Nam thành bia đỡ đạn
+          fail_bully_2_framed: {
+            moodEmoji: "😱",
+            moodText: "Bị nhóm bạn xấu gài bẫy làm bia đỡ đạn",
+            pressure: "Vòng xoáy 2: Bị đồng bọn phản bội",
+            isCrisis: true,
+            messages: [
+              { sender: "sms", side: "system", text: "🚨 [SÁNG HÔM SAU]: Hùng sốc tâm lý ngất xỉu phải đi cấp cứu. Phụ huynh Hùng đã gửi bằng chứng lên Công An khu vực để điều tra hành vi bạo lực mạng!" },
+              { sender: "Thảo", side: "left", time: "08:00", text: "Tụi này nhanh tay xóa hết nick phụ và bình luận của tụi này rồi! Trên ảnh chụp màn hình giờ chỉ còn mỗi bình luận của Nam thôi!" },
+              { sender: "Thảo", side: "left", time: "08:01", text: "Nam cấm được khai ra nhóm kín, nếu không tụi này sẽ vu cho Nam là kẻ chủ mưu! Liệu mà nhận tội một mình đi!" }
+            ],
+            context: "Sự tàn nhẫn của những kẻ bắt nạt! Chúng xóa sạch dấu vết và đẩy Nam ra làm kẻ giơ đầu chịu báng trước pháp luật và nhà trường.",
+            innerThought: "“Hùng phải đi cấp cứu... Còn nhóm Thảo thì gài bẫy mình chịu trận một mình... Mình đã đánh mất tất cả chỉ vì sự hèn nhát của bản thân...”",
+            choices: [
+              {
+                label: "Tiếp tục khiếp sợ im lặng, cắn răng chịu trận một mình để nhóm Thảo không trả thù.",
+                statEffect: { 4: -30 },
+                nextNode: "fail_bully_3_regret"
+              },
+              {
+                label: "Thức tỉnh trong cay đắng: Nộp toàn bộ lịch sử tin nhắn nhóm kín cho Ban Giám Hiệu, dũng cảm nhận phần lỗi của mình.",
+                statEffect: { 4: +15 },
+                nextNode: "recover_bully_end"
+              }
+            ]
+          },
+
+          // TẦNG 3 SAI: Bản án kỷ luật và nỗi dằn vặt suốt đời
+          fail_bully_3_regret: {
+            moodEmoji: "😭",
+            moodText: "Vết thương lương tâm không bao giờ lành",
+            pressure: "Vòng xoáy 3: Sự trừng phạt của lương tâm",
+            isCrisis: true,
+            messages: [
+              { sender: "Cô Chủ Nhiệm", side: "left", time: "09:00", text: "Gia đình em Hùng đã làm thủ tục chuyển trường cho bạn vì chấn thương tâm lý. Còn em Nam sẽ nhận quyết định kỷ luật trước toàn trường vì hành vi tiếp tay bạo lực mạng!" },
+              { sender: "Thảo & Minh", side: "system", text: "💬 Tiếng xì xào ngoài hành lang: 'Nhìn thằng Nam kìa, vừa hèn vừa ngu, bị tụi mình dắt mũi mà không làm gì được haha!'" }
+            ],
+            context: "Một cái giá quá đắt! Hùng phải chuyển trường, Nam bị kỷ luật, còn những kẻ xúi giục thì quay lưng cười nhạo Nam như một kẻ ngốc nghếch.",
+            innerThought: "“Mình đã đánh đổi tình bạn chân thành lấy sự khinh bỉ của những kẻ xấu... Vết nhơ này sẽ theo mình suốt cả cuộc đời...”",
+            choices: [
+              {
+                label: "Gục ngã trong sự hối hận muộn màng.",
+                statEffect: { 4: -30 },
+                nextNode: "disaster_bully"
+              }
+            ]
+          },
+
+          disaster_bully: {
+            isEnd: true,
+            outcomeType: "failed",
+            title: "Vết Thương Lương Tâm & Bài Học Đắt Giá",
+            outcomeText: "Hùng chuyển trường vì bị tổn thương tâm lý nặng nề. Nam vừa bị ghi vào sổ kỷ luật vì hành vi bạo lực mạng, vừa bị nhóm của Thảo coi thường như một kẻ tay sai nhu nhược.",
+            lesson: "Hùa theo đám đông bắt nạt người khác trên mạng không bao giờ đem lại sự tôn trọng. Một lời nói ác ý trên bàn phím có thể làm tan nát cuộc đời của một con người!"
+          },
+
+          recover_bully_end: {
+            isEnd: true,
+            outcomeType: "recovered",
+            title: "Giọt Nước Mắt Hối Hận & Chuộc Lại Tình Bạn",
+            outcomeText: "Nhờ sự trung thực của Nam khi đưa ra bằng chứng nhóm kín, nhà trường đã xử lý nghiêm nhóm cầm đầu. Hùng đã tha thứ cho Nam khi thấy Nam chân thành xin lỗi và chuộc lỗi bằng hành động.",
+            lesson: "Kẻ yếu đuối hùa theo cái ác, người dũng cảm biết dừng lại và sửa sai. Đừng bao giờ đánh đổi sự tử tế của mình để lấy một tình bạn độc hại trên không gian mạng."
+          },
+
+          safe_bully_end: {
+            isEnd: true,
+            outcomeType: "perfect",
+            title: "Lá Chắn Kiên Cường Đẩy Lùi Bạo Lực Mạng",
+            outcomeText: "Hành động kiên quyết của Nam đã giúp bài đăng bị gỡ ngay trong đêm trước khi Hùng đọc được. Nhóm của Thảo đã bị xử lý nghiêm khắc, còn Hùng vô cùng biết ơn sự tử tế và lòng dũng cảm của Nam!",
+            lesson: "Ứng xử lịch sự và dũng cảm bảo vệ người yếu thế trên mạng chính là thước đo nhân cách của một công dân số chân chính!"
+          }
+        }
+      }
+    ];
+
+    // --- 3. QUẢN LÝ TRẠNG THÁI TRÒ CHƠI ---
+    let currentChapterIdx = 0;
+    let currentNodeKey = 'start';
+    let stats = { 1: 100, 2: 100, 3: 100, 4: 100 };
+    let msgTimeouts = [];
+
+    function startGame() {
+      playSfx('good');
+      document.getElementById('intro-screen').classList.add('hidden');
+      loadChapter(0);
+    }
+
+    function clearMsgTimeouts() {
+      msgTimeouts.forEach(t => clearTimeout(t));
+      msgTimeouts = [];
+    }
+
+    function updateStatsUI() {
+      for (let i = 1; i <= 4; i++) {
+        stats[i] = Math.max(10, Math.min(100, stats[i]));
+        const valEl = document.getElementById(`stat-val-${i}`);
+        const barEl = document.getElementById(`stat-bar-${i}`);
+        if (valEl) valEl.innerText = `${stats[i]}%`;
+        if (barEl) barEl.style.width = `${stats[i]}%`;
+      }
+    }
+
+    function loadChapter(idx) {
+      currentChapterIdx = idx;
+      currentNodeKey = 'start';
+      const chapter = STORY_CHAPTERS[idx];
+
+      // Cập nhật Header
+      document.getElementById('chapter-badge').innerText = chapter.id;
+      document.getElementById('chapter-subtitle').innerText = chapter.subtitle;
+      document.getElementById('chapter-title').innerText = chapter.title;
+      document.getElementById('rule-reminder-text').innerText = chapter.ruleReminder;
+
+      // Cập nhật khung Điện thoại
+      document.getElementById('phone-clock').innerText = chapter.clock;
+      document.getElementById('app-avatar').innerText = chapter.appHeader.avatar;
+      document.getElementById('app-name').innerText = chapter.appHeader.name;
+      document.getElementById('app-status').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> ${chapter.appHeader.status}`;
+      document.getElementById('app-tag').innerText = chapter.appHeader.tag;
+
+      // Xóa lịch sử chat cũ khi sang chương mới
+      document.getElementById('phone-feed').innerHTML = '';
+
+      renderSceneNode('start');
+    }
+
+    function renderSceneNode(nodeKey) {
+      clearMsgTimeouts();
+      currentNodeKey = nodeKey;
+      const chapter = STORY_CHAPTERS[currentChapterIdx];
+      const node = chapter.nodes[nodeKey];
+
+      // Nếu là Node kết thúc chương -> mở Modal đúc kết bài học
+      if (node.isEnd) {
+        showChapterReflection(node);
+        return;
+      }
+
+      // Hiệu ứng khung cảnh (Bình thường vs Khủng hoảng)
+      const phoneFrame = document.getElementById('phone-frame');
+      const narrativeCard = document.getElementById('narrative-card');
+      if (node.isCrisis) {
+        playSfx('alert');
+        phoneFrame.className = "flex-1 bg-slate-950 border-[3px] border-rose-500 rounded-[32px] shadow-2xl flex flex-col overflow-hidden relative crisis-glow";
+        narrativeCard.className = "bg-rose-950/25 border-2 border-rose-500/80 rounded-3xl p-5 sm:p-6 shadow-2xl space-y-4";
+      } else {
+        phoneFrame.className = "flex-1 bg-slate-950 border-[3px] border-slate-700 rounded-[32px] shadow-2xl flex flex-col overflow-hidden relative";
+        narrativeCard.className = "bg-slate-900/90 border-2 border-slate-800 rounded-3xl p-5 sm:p-6 shadow-2xl space-y-4";
+      }
+
+      // Cập nhật tâm lý & văn bản dẫn chuyện
+      document.getElementById('mood-emoji').innerText = node.moodEmoji;
+      document.getElementById('mood-text').innerText = node.moodText;
+      document.getElementById('pressure-level').innerText = node.pressure;
+      document.getElementById('story-context').innerText = node.context;
+      document.getElementById('inner-thought').innerText = node.innerThought;
+
+      // Tạm khóa khu vực lựa chọn trong lúc tin nhắn đang chạy ra để học sinh đọc theo mạch truyện
+      const choicesContainer = document.getElementById('choices-container');
+      choicesContainer.innerHTML = `
+        <div class="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 text-center text-xs sm:text-sm text-cyan-300 font-bold flex items-center justify-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+          <span>Đang nhận tin nhắn trên điện thoại của Nam... Hãy quan sát màn hình điện thoại!</span>
+        </div>
+      `;
+
+      // Chạy hiệu ứng tin nhắn xuất hiện tuần tự
+      const feed = document.getElementById('phone-feed');
+      const typingBox = document.getElementById('typing-indicator');
+      const msgs = node.messages || [];
+
+      let delay = 250;
+      msgs.forEach((m, index) => {
+        const t1 = setTimeout(() => {
+          if (m.side === 'left') {
+            typingBox.classList.remove('hidden');
+            document.getElementById('typing-text').innerText = `${m.sender} đang soạn tin...`;
+            feed.scrollTop = feed.scrollHeight;
+          }
+        }, delay);
+        msgTimeouts.push(t1);
+
+        delay += (m.side === 'left' ? 650 : 250);
+
+        const t2 = setTimeout(() => {
+          typingBox.classList.add('hidden');
+          appendMessageBubble(m);
+          playSfx(m.side === 'system' ? 'alert' : 'msg');
+
+          if (index === msgs.length - 1) {
+            renderChoiceButtons(node.choices);
+          }
+        }, delay);
+        msgTimeouts.push(t2);
+
+        delay += 450;
+      });
+    }
+
+    function appendMessageBubble(m) {
+      const feed = document.getElementById('phone-feed');
+      const div = document.createElement('div');
+      div.className = 'msg-appear';
+
+      if (m.side === 'system') {
+        div.innerHTML = `
+          <div class="bg-amber-950/80 border border-amber-500/60 text-amber-200 p-3 rounded-2xl text-xs font-bold leading-relaxed shadow-md">
+            ${m.text}
+          </div>
+        `;
+      } else if (m.side === 'right') {
+        div.innerHTML = `
+          <div class="flex flex-col items-end">
+            <span class="text-[10px] text-slate-400 font-bold mb-0.5 mr-1">${m.sender} • ${m.time || ''}</span>
+            <div class="bg-gradient-to-r from-cyan-600 to-blue-600 text-white p-3 rounded-2xl rounded-tr-xs text-xs sm:text-sm font-medium max-w-[88%] shadow">
+              ${m.text}
+            </div>
+          </div>
+        `;
+      } else {
+        div.innerHTML = `
+          <div class="flex flex-col items-start">
+            <span class="text-[10px] text-sky-400 font-bold mb-0.5 ml-1">${m.sender} • ${m.time || ''}</span>
+            <div class="bg-slate-800 border border-slate-700 text-slate-100 p-3 rounded-2xl rounded-tl-xs text-xs sm:text-sm font-medium max-w-[88%] shadow">
+              ${m.text}
+            </div>
+          </div>
+        `;
+      }
+
+      feed.appendChild(div);
+      feed.scrollTop = feed.scrollHeight;
+    }
+
+    function renderChoiceButtons(choices) {
+      const container = document.getElementById('choices-container');
+      container.innerHTML = '';
+
+      const letters = ['A', 'B', 'C', 'D'];
+      choices.forEach((ch, idx) => {
+        const btn = document.createElement('button');
+        // LOẠI BỎ HOÀN TOÀN CÁC NHÃN GỢI Ý ĐÚNG/SAI, GIỮ NGUYÊN TÍNH BÍ MẬT CỦA CHOICE MASTER
+        btn.className = "w-full text-left p-3.5 sm:p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-750 active:scale-[0.99] border-2 border-slate-700 hover:border-cyan-400 transition-all flex items-start gap-3 shadow-lg group cursor-pointer msg-appear";
+
+        btn.innerHTML = `
+          <div class="w-8 h-8 rounded-xl bg-slate-950 border border-slate-600 group-hover:border-cyan-400 group-hover:bg-cyan-950 text-cyan-300 font-black text-sm flex items-center justify-center shrink-0 mt-0.5 transition">
+            ${letters[idx]}
+          </div>
+          <div class="flex-1">
+            <div class="text-xs sm:text-base font-bold text-slate-100 group-hover:text-white leading-snug">
+              ${ch.label}
+            </div>
+          </div>
+        `;
+
+        btn.onclick = () => handleSelectChoice(ch);
+        container.appendChild(btn);
+      });
+    }
+
+    function handleSelectChoice(choice) {
+      // Cập nhật chỉ số
+      if (choice.statEffect) {
+        Object.keys(choice.statEffect).forEach(k => {
+          stats[k] = (stats[k] || 100) + choice.statEffect[k];
+        });
+        updateStatsUI();
+      }
+
+      renderSceneNode(choice.nextNode);
+    }
+
+    // --- 4. HIỂN THỊ BẢNG ĐÚC KẾT TỪNG TÌNH HUỐNG ---
+    function showChapterReflection(endNode) {
+      const modal = document.getElementById('modal-reflection');
+      const iconEl = document.getElementById('reflect-icon');
+      const tagEl = document.getElementById('reflect-tag');
+      const titleEl = document.getElementById('reflect-title');
+      const outcomeBox = document.getElementById('reflect-outcome-box');
+      const lessonEl = document.getElementById('reflect-lesson');
+      const nextBtn = document.getElementById('btn-next-chapter');
+
+      titleEl.innerText = endNode.title;
+      lessonEl.innerText = endNode.lesson;
+
+      if (endNode.outcomeType === 'perfect') {
+        playSfx('good');
+        iconEl.innerText = "🌟";
+        iconEl.className = "w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-400 flex items-center justify-center text-3xl shrink-0";
+        tagEl.innerText = "XỬ LÝ XUẤT SẮC • VỮNG VÀNG BẢN LĨNH";
+        tagEl.className = "text-xs font-black uppercase tracking-widest text-emerald-400";
+        outcomeBox.className = "p-4 rounded-2xl bg-emerald-950/60 border border-emerald-500/60 text-emerald-100 text-sm sm:text-base leading-relaxed font-semibold";
+      } else if (endNode.outcomeType === 'recovered') {
+        playSfx('good');
+        iconEl.innerText = "🛡️";
+        iconEl.className = "w-14 h-14 rounded-2xl bg-amber-500/20 border border-amber-400 flex items-center justify-center text-3xl shrink-0";
+        tagEl.innerText = "VƯỢT QUA KHỦNG HOẢNG • BIẾT QUAY ĐẦU SỬA SAI";
+        tagEl.className = "text-xs font-black uppercase tracking-widest text-amber-400";
+        outcomeBox.className = "p-4 rounded-2xl bg-amber-950/60 border border-amber-500/60 text-amber-100 text-sm sm:text-base leading-relaxed font-semibold";
+      } else {
+        playSfx('alert');
+        iconEl.innerText = "⚠️";
+        iconEl.className = "w-14 h-14 rounded-2xl bg-rose-500/20 border border-rose-400 flex items-center justify-center text-3xl shrink-0";
+        tagEl.innerText = "HẬU QUẢ ĐÁNG TIẾC • BÀI HỌC XƯƠNG MÁU";
+        tagEl.className = "text-xs font-black uppercase tracking-widest text-rose-400";
+        outcomeBox.className = "p-4 rounded-2xl bg-rose-950/60 border border-rose-500/60 text-rose-100 text-sm sm:text-base leading-relaxed font-semibold";
+      }
+
+      outcomeBox.innerText = endNode.outcomeText;
+
+      if (currentChapterIdx < STORY_CHAPTERS.length - 1) {
+        nextBtn.innerText = `TIẾP TỤC TÌNH HUỐNG ${currentChapterIdx + 2} / 4 ➔`;
+      } else {
+        nextBtn.innerText = "XEM TỔNG KẾT HÀNH TRÌNH CỦA NAM 🏆";
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function proceedToNextChapter() {
+      document.getElementById('modal-reflection').classList.add('hidden');
+      if (currentChapterIdx < STORY_CHAPTERS.length - 1) {
+        loadChapter(currentChapterIdx + 1);
+      } else {
+        showFinalSummary();
+      }
+    }
+
+    // --- 5. MÀN HÌNH TỔNG KẾT CUỐI CÙNG ---
+    function showFinalSummary() {
+      playSfx('good');
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById(`final-stat-${i}`).innerText = `${stats[i]}%`;
+      }
+
+      const avgScore = Math.round((stats[1] + stats[2] + stats[3] + stats[4]) / 4);
+      const rankTitle = document.getElementById('final-rank-title');
+      const summaryText = document.getElementById('final-summary-text');
+      const emojiEl = document.getElementById('final-emoji');
+
+      if (avgScore >= 95) {
+        emojiEl.innerText = "🏆";
+        rankTitle.innerText = "CÔNG DÂN SỐ BẢN LĨNH & THÔNG THÁI (${avgScore}%)".replace('${avgScore}', avgScore);
+        summaryText.innerText = "Tuyệt vời! Em không chỉ nắm vững 4 quy tắc an toàn và ứng xử trên Internet mà còn có bản lĩnh tâm lý cực kỳ vững vàng. Trước những lời nài nỉ, khích tướng hay đe dọa cô lập của bạn bè, em luôn biết giữ cái đầu lạnh, bảo vệ nguyên tắc đúng đắn và lan tỏa điều tử tế!";
+      } else if (avgScore >= 75) {
+        emojiEl.innerText = "🌟";
+        rankTitle.innerText = `NGƯỜI DÙNG MẠNG TRƯỞNG THÀNH (${avgScore}%)`;
+        summaryText.innerText = "Đôi lúc sự cả nể và sợ mất lòng bạn bè đã kéo Nam rơi vào những tình huống đầy cam go. Thế nhưng điều đáng quý nhất là em đã biết dũng cảm dừng lại đúng lúc, trung thực nhận trách nhiệm và tìm kiếm sự giúp đỡ từ thầy cô, cha mẹ để khắc phục hậu quả!";
+      } else {
+        emojiEl.innerText = "🌱";
+        rankTitle.innerText = `CẦN RÈN LUYỆN BẢN LĨNH TỪ CHỐI (${avgScore}%)`;
+        summaryText.innerText = "Qua nhật ký của Nam, em đã thấy sự nhẹ dạ cả tin và tâm lý sợ bị bạn bè giận trên mạng có thể dẫn đến những hậu quả lớn như thế nào. Hãy nhớ rằng: một người bạn tốt sẽ luôn tôn trọng sự an toàn của em. Hãy bấm chơi lại để thử những cách xử lý quyết đoán hơn nhé!";
+      }
+
+      document.getElementById('modal-final').classList.remove('hidden');
+    }
+
+    function restartWholeGame() {
+      document.getElementById('modal-final').classList.add('hidden');
+      stats = { 1: 100, 2: 100, 3: 100, 4: 100 };
+      updateStatsUI();
+      loadChapter(0);
+    }
+  </script>
+</body>
+</html>
